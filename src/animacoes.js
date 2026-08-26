@@ -17,7 +17,7 @@ export const ANIMACOES = {
   zoomRolagem: true, // a foto cresce até 6% enquanto atravessa a tela, no ritmo do dedo
   veuQuente: true, // véu terracota sobre a foto que evapora quando ela entra
   respiracaoHero: true, // a foto do topo cresce 7% e deriva de leve em 24s, ida e volta, para sempre
-  toqueFoto: true, // tocar (ou passar o mouse) aproxima 4,5%: entra em 0,6s, volta em 1,6s
+  toqueFoto: true, // extra de desktop: passar o mouse aproxima 4,5% (só onde hover existe; no celular não faz nada)
   parallaxFotos: true, // timeline, duo e galeria deslizam em velocidades diferentes da página
 
   // --- na página ---

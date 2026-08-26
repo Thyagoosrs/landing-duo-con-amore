@@ -34,14 +34,16 @@ npm run build    # dist/
 6. **Tipografia:** títulos em Cormorant Garamond itálico peso 500; corpo em Inter 400. Não introduzir outra fonte.
 7. **Toda imagem tem `alt` descritivo** e `loading="lazy"`, menos a foto do hero.
 8. **Animação sempre com fallback:** respeitar `prefers-reduced-motion` e nunca deixar conteúdo invisível se o JS falhar (ver a rede de segurança em `useRevelar`).
-9. Mudança pedida é mudança cirúrgica: não redesenhar o que não foi pedido.
-10. Rodar `npm run build` antes de considerar a tarefa concluída.
+9. **No celular, toda animação aparece rolando a página** (entrada na tela via observer, ou presa ao scroll) — nunca dependa de hover ou clique para o efeito existir. Hover/clique pode existir como extra no desktop, sempre dentro de `@media (hover: hover)`.
+10. Mudança pedida é mudança cirúrgica: não redesenhar o que não foi pedido.
+11. Rodar `npm run build` antes de considerar a tarefa concluída.
 
 ## Tom do texto
 Português do Brasil, sofisticado e direto, sem emoji e sem exclamação. Fala com o casal ("vocês").
 Botão promete a resposta, não o esforço: "Ver se a data está livre", não "Enviar mensagem".
 
 ## Pendências conhecidas
+- Thyago não gosta do componente de timeline com a linha que desce (seção Momentos) — repensar a apresentação dos três momentos em outra conversa, sem a linha.
 - O selo da marca mostra o texto "Logo" de propósito (placeholder assumido, `marca.selo` em `conteudo.js`) — trocar quando a marca tiver símbolo.
 - `duoconamore.com.br` registrado mas sem DNS: criar os registros A do GitHub Pages no Registro.br e um `public/CNAME` com o domínio.
 - Todas as fotos em `public/assets/` são placeholders — trocar por fotos reais (inclusive `og.png`, 1200×630).
