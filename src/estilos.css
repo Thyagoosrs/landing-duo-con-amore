@@ -11,6 +11,17 @@
   --texto: #6f5c46;
   --dourado: #c08a55;
   --linha: rgba(59, 42, 28, 0.16);
+  /* menu do celular — vidro CLARO sobre a foto do hero. Todos derivados de
+     --areia (#e8dfd0), --marrom (#3b2a1c) e --marrom-escuro (#2c1f14):
+     nenhuma cor nova na paleta. */
+  --menu-veu: rgba(232, 223, 208, 0.64); /* --areia a 64% */
+  --menu-veu-solido: rgba(232, 223, 208, 0.93); /* fallback sem backdrop-filter */
+  --menu-borda: rgba(59, 42, 28, 0.18);
+  --menu-brilho: rgba(232, 223, 208, 0.4); /* lift de luz na aresta de cima */
+  --menu-risco: rgba(59, 42, 28, 0.12);
+  --menu-toque: rgba(59, 42, 28, 0.07);
+  --menu-texto: var(--marrom);
+  --menu-sombra: rgba(44, 31, 20, 0.4);
   --serif: 'Cormorant Garamond', Georgia, serif;
   --sans: Inter, system-ui, -apple-system, sans-serif;
   --pagina: 1240px;
@@ -36,7 +47,13 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-img { display: block; max-width: 100%; }
+/* height:auto é obrigatório junto com os atributos width/height do HTML.
+   Sem ele, o height="1280" do <img> vira dica de apresentação (height:1280px)
+   e, com a largura também definida, o aspect-ratio do CSS passa a ser IGNORADO
+   — toda foto virava uma tira de 1280px de altura e a página dobrava de tamanho.
+   Os atributos ficam (evitam salto de layout e o bug de largura no Android);
+   é o height:auto que devolve o controle ao aspect-ratio. */
+img { display: block; max-width: 100%; height: auto; }
 a { color: var(--terracota); text-decoration: none; }
 a:hover { color: var(--marrom); }
 /* sem isso, todo <button> nasce com a caixa nativa do navegador (fundo, borda,
@@ -110,15 +127,26 @@ button {
 
 /* --- cabeçalho --- */
 /* a faixa embrulha o cabeçalho por causa do retrátil (an-cabecalho, ver animacoes.js) */
-.cabecalho__faixa { background: var(--areia); }
+/* position e z-index na regra BASE, não só na sticky: o painel do menu é
+   position:absolute ancorado aqui. Sem position, com cabecalhoRetratil:false
+   ele escaparia para o topo da página; sem z-index, o .hero__quadro (que é
+   position:relative e vem depois no DOM) pintaria por cima dele.
+   A .barra-fixa (60) e o .filete (70) continuam acima. */
+.cabecalho__faixa { background: var(--areia); position: relative; z-index: 50; }
 html.an-cabecalho .cabecalho__faixa {
   position: sticky;
   top: 0;
-  z-index: 50;
   transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
   box-shadow: 0 1px 0 var(--linha);
 }
 html.an-cabecalho .cabecalho__faixa.recolhido { transform: translateY(-102%); }
+/* com o menu aberto, o cabeçalho não recolhe: recolher levaria o painel
+   aberto para fora da tela. Fecha a janela entre o limiar de rolagem que
+   fecha o menu (24px) e o limiar que recolhe a faixa (>140px). */
+html.menu-aberto .cabecalho__faixa.recolhido { transform: none; }
+/* o backdrop-filter do painel recompõe a cada quadro; pausar a respiração
+   da foto atrás dele é o que mantém isso fluido em aparelho modesto. */
+html.menu-aberto .hero__foto { animation-play-state: paused; }
 .cabecalho {
   max-width: var(--pagina);
   margin: 0 auto;
@@ -185,43 +213,154 @@ html.an-cabecalho .cabecalho__faixa.recolhido { transform: translateY(-102%); }
   .marca__dupla { font-size: 13px; }
 }
 .kebab {
+  position: relative; /* âncora do ::after que expande o alvo de toque */
   width: 32px;
   height: 32px;
   flex: none;
   display: grid;
   place-items: center;
-  border-radius: 8px;
+  /* 3px é o raio do painel: aberto, gatilho e superfície são o mesmo material,
+     e material igual pede canto igual. */
+  border-radius: 3px;
   color: var(--texto);
   transition: background 0.2s ease, color 0.2s ease;
 }
 .kebab svg { width: 18px; height: 18px; }
 .kebab:hover { background: rgba(59, 42, 28, 0.06); }
-.kebab[aria-expanded='true'] { color: var(--marrom); background: rgba(59, 42, 28, 0.08); }
+/* alvo de toque: a caixa visual é 32px, abaixo do mínimo de 44. O ::after
+   expande a área sensível sem mexer no layout. Assimétrico de propósito: a
+   pill do WhatsApp está a 6px à direita e não pode perder clique para o menu. */
+.kebab::after { content: ''; position: absolute; inset: -7px -2px -7px -7px; }
+/* aberto, o gatilho veste o material do painel — é isso que costura os dois
+   sem precisar de bico (um bico não herdaria o backdrop-filter e viraria um
+   losango opaco de cor errada). */
+/* aberto: a tinta escurece e entra um filete de 1px no mesmo valor da borda do
+   painel. Preenchimento aqui viraria caixinha cinza no cabeçalho claro — o
+   painel abrindo embaixo já é o aviso de que está aberto. */
+.kebab[aria-expanded='true'] {
+  color: var(--marrom);
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--menu-borda);
+}
 
-/* painel do menu: altura medida via JS (Cabecalho.jsx), nunca por grid-template-rows
-   — essa técnica não resolve em contêiner de altura automática. */
+/* =========================================================
+   Painel do menu (celular) — cartão de vidro escuro sobre a foto do hero.
+   Sem max-height e sem altura medida por JS: é position:absolute, então
+   não empurra um pixel da página.
+   ========================================================= */
 .cabecalho__painel {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.32s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.32s ease;
-  border-top: 1px solid transparent;
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 16px;
+  z-index: 1;
+  width: min(232px, calc(100vw - 32px));
+  padding: 6px;
+  border: 1px solid var(--menu-borda);
+  border-radius: 3px;
+  background-color: var(--menu-veu);
+  background-image: linear-gradient(180deg, var(--menu-brilho), rgba(232, 223, 208, 0) 62%);
+  /* brightness() ACIMA de 1 é o que sustenta um painel claro e transparente:
+     ele LEVANTA as sombras da foto antes da composição (um pixel quase preto,
+     13, chega em 26), então o véu pode ficar em 64% — mais transparente que a
+     versão escura — e o texto marrom ainda tem base clara embaixo. Sem isso,
+     véu claro sobre foto escura vira texto escuro sobre fundo escuro.
+     O raio do blur nunca anima: estoura no Safari. */
+  -webkit-backdrop-filter: blur(20px) brightness(2) saturate(1.2);
+  backdrop-filter: blur(20px) brightness(2) saturate(1.2);
+  box-shadow: 0 14px 32px -14px var(--menu-sombra);
+  /* fechado. visibility tira os links da tabulação e da árvore de
+     acessibilidade sem display:none, que mataria a transição de saída. */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-8px) scale(0.97);
+  transform-origin: 100% 0;
+  /* saída: reta e rápida. O delay no visibility deixa o fade ser visto
+     antes de o elemento sair da árvore. */
+  transition:
+    opacity 0.14s cubic-bezier(0.4, 0, 1, 1),
+    transform 0.14s cubic-bezier(0.4, 0, 1, 1),
+    visibility 0s linear 0.14s;
 }
-.cabecalho__painel.aberto { border-top-color: var(--linha); }
-.cabecalho__painel nav {
-  display: flex;
-  flex-direction: column;
-  max-width: var(--pagina);
-  margin: 0 auto;
-  padding: 4px var(--pad-x) 10px;
+/* sem backdrop-filter não há brightness domando a foto: o véu sobe para 90%. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .cabecalho__painel { background-color: var(--menu-veu-solido); }
 }
+/* entrada mais lenta que a saída: entrada quer ser percebida, saída quer
+   sair da frente. Só opacity e transform animam — zero layout. */
+.cabecalho__painel.aberto {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: none;
+  transition:
+    opacity 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 0s;
+}
+.cabecalho__painel nav { display: flex; flex-direction: column; max-width: none; margin: 0; padding: 0; }
+/* 48px e não 44: 44 é o mínimo legal, 48 é o confortável. min-height (e não
+   padding vertical) para um rótulo que quebre em duas linhas crescer o item
+   em vez de estourar o alinhamento. 14px porque texto claro sobre fundo
+   escuro perde peso aparente, e a leitura é no celular, à noite. */
 .cabecalho__painel nav a {
-  font: 400 13px/1 var(--sans);
-  color: var(--texto);
-  padding: 12px 2px;
-  border-bottom: 1px solid rgba(59, 42, 28, 0.08);
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 14px;
+  border-radius: 2px;
+  font: 500 14px/1 var(--sans);
+  letter-spacing: 0.01em;
+  color: var(--menu-texto);
+  background-color: transparent;
+  -webkit-tap-highlight-color: transparent;
+  opacity: 0;
+  transition: opacity 0.14s linear 0s, background-color 0.15s ease, color 0.15s ease;
 }
-.cabecalho__painel nav a:last-child { border-bottom: 0; }
-.cabecalho__painel nav a:hover { color: var(--marrom); }
+/* cascata curta: a aresta do cartão chega primeiro, o texto assenta depois. */
+.cabecalho__painel.aberto nav a { opacity: 1; }
+.cabecalho__painel.aberto nav a:nth-child(2) { transition-delay: 0.04s, 0s, 0s; }
+.cabecalho__painel.aberto nav a:nth-child(3) { transition-delay: 0.08s, 0s, 0s; }
+/* separador recuado ao padding do texto: o que era régua de tabela de ponta
+   a ponta vira detalhe tipográfico. Fica (em vez de só espaçamento) porque
+   com a foto atravessando o painel, espaçamento puro perde a pista de que
+   os três links são uma lista. */
+.cabecalho__painel nav a + a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 14px;
+  right: 14px;
+  height: 1px;
+  background: var(--menu-risco);
+}
+/* o dourado da marca entra como feedback, não como ornamento.
+   Cresce por scaleX e não por width: largura animada dispara layout a cada
+   quadro, e aqui o quadro já está caro por causa do backdrop-filter do painel. */
+.cabecalho__painel nav a::after {
+  content: '';
+  position: absolute;
+  left: 14px;
+  bottom: 11px;
+  height: 1px;
+  width: 20px;
+  background: var(--dourado);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* :active é o estado que existe no celular (regra 9): o efeito nasce do dedo.
+   O realce CLAREIA — escurecer painel escuro sobre foto escura é invisível. */
+.cabecalho__painel nav a:active { background-color: var(--menu-toque); color: var(--marrom-escuro); }
+.cabecalho__painel nav a:active::after { transform: scaleX(1); }
+@media (hover: hover) {
+  .cabecalho__painel nav a:hover { background-color: var(--menu-toque); color: var(--marrom-escuro); }
+  .cabecalho__painel nav a:hover::after { transform: scaleX(1); }
+}
+/* num painel claro o terracota do :focus-visible global cai para ~2:1 sobre a
+   parte mais clara, e o dourado é pior ainda. Marrom passa em qualquer pixel. */
+.cabecalho__painel nav a:focus-visible { outline: 2px solid var(--marrom); outline-offset: -3px; }
 
 /* a partir daqui sobra espaço: links sempre visíveis, kebab e painel saem de cena */
 @media (min-width: 768px) {
@@ -232,9 +371,28 @@ html.an-cabecalho .cabecalho__faixa.recolhido { transform: translateY(-102%); }
   .cabecalho__painel { display: none; }
 }
 
-/* --- hero --- */
+/* --- hero ---
+   Duas composições da mesma marcação (ver Hero.jsx):
+     base (celular/tablet retrato) — foto de largura cheia com os títulos
+       sobrepostos no rodapé dela, sobre o véu; parágrafo e ações abaixo.
+     ≥1024px — foto de um lado, TODO o texto do outro. Sem nada sobre a foto,
+       então o véu sai de cena e o rosto do casal deixa de ser coberto. A foto
+       nativa tem 720px de largura: mantê-la em coluna (e não esticada na
+       largura toda) é o que a conserva nítida em monitor grande.
+   ------------------------------------------------------------------ */
 .hero { padding: clamp(8px, 2vw, 20px) 0 clamp(52px, 8vw, 104px); }
-.hero__quadro { position: relative; max-width: 780px; margin: 0 auto; overflow: hidden; /* a respiração da foto acontece dentro da moldura */ }
+
+/* no celular a foto e os títulos dividem a MESMA célula do grid: é o que
+   sobrepõe um ao outro sem número mágico de margem negativa. */
+.hero__grade { display: grid; grid-template-columns: minmax(0, 1fr); }
+.hero__quadro {
+  grid-area: 1 / 1;
+  position: relative;
+  max-width: 780px;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden; /* a respiração da foto acontece dentro da moldura */
+}
 /* A moldura nunca passa de ~68% da altura da tela: numa tela baixa (iPhone SE,
    667px) o 4:5 deixava a foto altíssima e o rosto do casal saía de quadro,
    além de empurrar o texto do hero para fora da primeira dobra.
@@ -260,9 +418,13 @@ html.an-cabecalho .cabecalho__faixa.recolhido { transform: translateY(-102%); }
   );
   pointer-events: none;
 }
-.hero__sobreposto {
-  position: absolute;
-  inset: auto 0 0 0;
+.hero__titulos {
+  grid-area: 1 / 1;
+  align-self: end;
+  z-index: 1;
+  max-width: 780px;
+  width: 100%;
+  margin: 0 auto;
   padding: 0 clamp(20px, 5vw, 40px) clamp(18px, 3vw, 28px);
 }
 /* letter-spacing e corpo por clamp: com os 0.24em do .kicker padrão, a linha
@@ -283,16 +445,75 @@ html.an-cabecalho .cabecalho__faixa.recolhido { transform: translateY(-102%); }
 .hero__linha { display: block; }
 .hero__linha-interna { display: block; }
 .hero__abaixo {
+  grid-area: 2 / 1;
   max-width: var(--pagina);
+  width: 100%;
   margin: 0 auto;
   padding: clamp(26px, 4vw, 40px) var(--pad-x) 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
   gap: clamp(24px, 4vw, 56px);
   align-items: start;
 }
 .hero__acoes { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
 .hero__acoes .btn-solido { align-self: stretch; max-width: 340px; }
+
+/* ---- ≥1024px: foto e texto lado a lado ----
+   1024 é onde a composição de uma coluna começa a desperdiçar largura: abaixo
+   disso a foto ainda usa 76% da tela; em 1366 caía para 57% e em 2560 para 30%,
+   virando uma coluna estreita num mar de bege. */
+@media (min-width: 1024px) {
+  .hero { padding-top: clamp(20px, 3vw, 44px); }
+  .hero__grade {
+    max-width: var(--pagina);
+    margin: 0 auto;
+    padding: 0 var(--pad-x);
+    /* a foto leva a fração maior: ela é o ativo da página, e com 1240px de
+       container a divisão 50/50 a deixava em ~500px, menor do que era antes.
+       57,5% de ~1030px úteis dá ~590px — perto do máximo que os 720px nativos
+       da foto permitem sem esticar. */
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    column-gap: clamp(40px, 4vw, 72px);
+    align-items: center;
+  }
+  /* a foto ocupa a coluna da esquerda inteira, nas duas linhas */
+  .hero__quadro { grid-area: 1 / 1 / 3 / 2; max-width: none; align-self: center; }
+  /* 4/5 é retrato demais para tela larga: 5/6 dá mais respiro lateral sem
+     esticar a foto além dos 720px nativos dela. */
+  .hero__foto { aspect-ratio: 5 / 6; max-height: 74svh; object-position: center 24%; }
+  /* sem texto sobre a foto, o véu não tem função — e era ele que apagava o
+     rosto da Júlia em tela grande. */
+  .hero__veu { display: none; }
+
+  .hero__titulos {
+    grid-area: 1 / 2;
+    align-self: end;
+    max-width: none;
+    margin: 0;
+    padding: 0 0 clamp(20px, 2.5vw, 32px);
+  }
+  .hero__titulo { max-width: 18ch; }
+  .hero__abaixo {
+    grid-area: 2 / 2;
+    align-self: start;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    /* uma coluna só: o parágrafo e as ações empilham dentro da coluna de
+       texto. O auto-fit da base criava uma terceira faixa vazia de 0px aqui. */
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(20px, 2.5vw, 32px);
+  }
+  .hero__abaixo .corpo { max-width: 44ch; }
+  .hero__acoes { flex-direction: row; align-items: center; flex-wrap: wrap; gap: 12px 22px; }
+  .hero__acoes .btn-solido { align-self: auto; max-width: none; }
+}
+
+/* ---- monitor grande: a foto para de crescer e o texto ganha ar ---- */
+@media (min-width: 1600px) {
+  .hero__grade { column-gap: clamp(64px, 4.5vw, 88px); }
+  .hero__foto { max-height: 72svh; }
+}
 
 /* --- momentos (timeline) --- */
 .momentos { padding: clamp(44px, 7vw, 96px) var(--pad-x); background: var(--areia-fundo); }
@@ -412,6 +633,41 @@ html.an-fio .timeline__fio {
   color: var(--texto);
   margin: 0;
   max-width: 38ch;
+}
+
+/* ---- ≥1024px: os três momentos lado a lado ----
+   Empilhados, os três gastavam 1.941px de altura usando metade da largura: o
+   texto ficava órfão no alto de uma coluna de 577px (o max-width de 38ch usa
+   336px) e a foto descia sozinha ao lado, com ~240px de bege morto entre os
+   dois. Em três colunas a seção cai para ~916px e a página encurta 19%.
+   O fio vertical sai de cena junto — ele existia para costurar uma sequência
+   empilhada que deixou de existir. No celular nada disso muda. */
+@media (min-width: 1024px) {
+  .timeline__trilho,
+  .timeline__fio,
+  .timeline__guia { display: none; }
+  .timeline__lista {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(28px, 3vw, 48px);
+    align-items: start;
+  }
+  /* o marcador deixa de ser coluna à esquerda e vira uma linha acima do título */
+  .momento { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .momento__marcador {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding-top: 0;
+    margin-bottom: 16px;
+  }
+  .momento__conteudo { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .momento__texto { max-width: none; }
+  /* 4/3 em vez de 5/4: a coluna é mais estreita, e o corte mais largo deixa as
+     três fotos com a mesma altura sem espremer a cena de cada uma. */
+  .momento__figura img { aspect-ratio: 4 / 3; }
+  /* sem o fio, o recuo que alinhava a nota a ele perde a função */
+  .momentos__nota { padding-left: 0; }
 }
 
 /* =========================================================
@@ -691,4 +947,12 @@ html.an-filete .filete { display: block; }
   html.an-cabecalho .cabecalho__faixa { transition: none; }
   html.an-suave { scroll-behavior: auto; }
   .voltar-topo svg { transition: none; }
+  /* o menu aparece e desaparece no lugar, com o mesmo véu e o mesmo
+     contraste: perde o movimento, não perde função. O backdrop-filter
+     PERMANECE — ele é material e legibilidade, não movimento. */
+  .cabecalho__painel,
+  .cabecalho__painel.aberto { transition: none; transform: none; }
+  .cabecalho__painel nav a,
+  .cabecalho__painel.aberto nav a { transition: none; transition-delay: 0s; opacity: 1; }
+  .cabecalho__painel nav a::after { transition: none; }
 }

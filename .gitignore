@@ -11,3 +11,12 @@ dist
 .env.*
 *.pem
 *.key
+
+# Ferramenta de design (skill impeccable): 3,4MB e 148 arquivos de código de
+# terceiro. Reinstalável, não é código do projeto, e o hook em
+# settings.local.json já é guardado por `[ ! -f ... ] || node ...` — sem a
+# skill presente ele simplesmente não roda.
+.claude/skills/
+.claude/worktrees/
+# cache do detector, regenerado a cada edição
+.impeccable/hook.cache.json
