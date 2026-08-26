@@ -12,7 +12,7 @@
 
 export const ANIMACOES = {
   // --- nas fotos ---
-  revelacao: true, // a foto abre por máscara (timeline e galeria alternam o lado) e assenta de 1,16 para 1
+  revelacao: true, // no celular a foto dissolve suave; no desktop abre por máscara (lado alternado); nas duas, assenta de 1,16 para 1
   florescerCor: true, // a foto entra meio sépia, sem viço, e acende para a cor plena em ~1,3s
   zoomRolagem: true, // a foto cresce até 6% enquanto atravessa a tela, no ritmo do dedo
   veuQuente: true, // véu terracota sobre a foto que evapora quando ela entra

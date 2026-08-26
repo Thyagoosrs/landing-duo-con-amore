@@ -5,7 +5,8 @@
 //   .lente   -> rolagem: zoom preso ao dedo (an-zoom) e parallax (an-parallax)
 //   img      -> assentamento de 1,16 para 1 e floração de cor na entrada
 //
-// revelacao: de onde a máscara abre — 'baixo' (padrão), 'esquerda' ou 'direita'.
+// revelacao: de onde a máscara abre no desktop — 'baixo' (padrão), 'esquerda' ou
+// 'direita'. No celular não há máscara: a foto dissolve (ver estilos.css).
 // Sem nenhuma classe de animação no <html>, isto rende só a foto, visível.
 export default function Figura({ className = '', foco, parallax, folga, revelacao, ...img }) {
   return (
