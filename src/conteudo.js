@@ -94,6 +94,12 @@ export const rodape = {
   voltarTopo: 'Voltar ao início da página',
 };
 
+export const cabecalho = {
+  // rótulos acessíveis do menu kebab do celular (não aparecem na tela, o leitor de tela lê)
+  abrirMenu: 'Abrir menu',
+  fecharMenu: 'Fechar menu',
+};
+
 export const contato = {
   titulo: 'Conte pra gente sobre o dia de vocês.',
   texto:

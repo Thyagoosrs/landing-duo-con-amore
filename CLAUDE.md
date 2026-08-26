@@ -37,6 +37,12 @@ npm run build    # dist/
 9. **No celular, toda animação aparece rolando a página** (entrada na tela via observer, ou presa ao scroll) — nunca dependa de hover ou clique para o efeito existir. Hover/clique pode existir como extra no desktop, sempre dentro de `@media (hover: hover)`.
 10. Mudança pedida é mudança cirúrgica: não redesenhar o que não foi pedido.
 11. Rodar `npm run build` antes de considerar a tarefa concluída.
+12. **Não transformar o snippet do GA4 em carregamento dinâmico.** A tag
+    `<script async src="https://www.googletagmanager.com/gtag/js?id=...">` no `index.html`
+    tem que continuar escrita por extenso. A propriedade no Google Search Console é
+    verificada pelo método "Google Analytics", que lê o HTML cru sem executar JS — montar
+    o `src` por `createElement` (como faz o snippet do Clarity, que é da Microsoft e pode
+    ficar assim) esconde a tag do verificador e derruba a verificação silenciosamente.
 
 ## Tom do texto
 Português do Brasil, sofisticado e direto, sem emoji e sem exclamação. Fala com o casal ("vocês").
