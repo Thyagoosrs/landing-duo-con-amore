@@ -1,0 +1,38 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "bounce-easing",
+        "value": "cubic-bezier(0.2, 1.2, 0.3, 1)",
+        "createdAt": "2026-08-26T20:56:02.436Z",
+        "reason": "user confirmed: pico medido em +0,7% do tamanho final = 0,16px numa bolinha de 23px, invisivel; a curva fica"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "13.5px",
+        "createdAt": "2026-08-26T20:58:08.938Z",
+        "reason": "user confirmed: caso unico, nao degrau — nota do repertorio, paragrafo unico herdado; documentado na Regra dos Tres Fora da Rampa no DESIGN.md"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "11px",
+        "createdAt": "2026-08-26T20:58:08.988Z",
+        "reason": "user confirmed: caso unico, nao degrau — variante responsiva do action-pill abaixo de 768px; documentado na Regra dos Tres Fora da Rampa no DESIGN.md"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "8px",
+        "createdAt": "2026-08-26T20:58:09.036Z",
+        "reason": "user confirmed: caso unico, nao degrau — texto Logo do selo, placeholder; documentado na Regra dos Tres Fora da Rampa no DESIGN.md"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "8.5px",
+        "createdAt": "2026-08-26T21:00:27.438Z",
+        "reason": "user confirmed manter mobile como estava: piso do clamp do kicker do hero; medido que 10px cabe, registrado como divida na Regra dos Quatro Fora da Rampa"
+      }
+    ]
+  }
+}

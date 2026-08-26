@@ -1,0 +1,393 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-26T20:57:57Z",
+  "title": "Design System: Duo Con Amore",
+  "extensions": {
+    "colorMeta": {
+      "areia": {
+        "role": "neutral",
+        "displayName": "Bege Areia",
+        "canonical": "#e8dfd0",
+        "tonalRamp": [
+          "oklch(15% 0.020 82)",
+          "oklch(26% 0.020 82)",
+          "oklch(37% 0.020 82)",
+          "oklch(48% 0.020 82)",
+          "oklch(60% 0.020 82)",
+          "oklch(71% 0.020 82)",
+          "oklch(83% 0.020 82)",
+          "oklch(95% 0.020 82)"
+        ]
+      },
+      "areia-fundo": {
+        "role": "neutral",
+        "displayName": "Bege Areia Fundo",
+        "canonical": "#e2d7c5",
+        "tonalRamp": [
+          "oklch(15% 0.026 84)",
+          "oklch(26% 0.026 84)",
+          "oklch(37% 0.026 84)",
+          "oklch(48% 0.026 84)",
+          "oklch(60% 0.026 84)",
+          "oklch(71% 0.026 84)",
+          "oklch(83% 0.026 84)",
+          "oklch(95% 0.026 84)"
+        ]
+      },
+      "marrom": {
+        "role": "neutral",
+        "displayName": "Marrom Profundo",
+        "canonical": "#3b2a1c",
+        "tonalRamp": [
+          "oklch(15% 0.033 56)",
+          "oklch(26% 0.033 56)",
+          "oklch(37% 0.033 56)",
+          "oklch(48% 0.033 56)",
+          "oklch(60% 0.033 56)",
+          "oklch(71% 0.033 56)",
+          "oklch(83% 0.033 56)",
+          "oklch(95% 0.033 56)"
+        ]
+      },
+      "marrom-escuro": {
+        "role": "neutral",
+        "displayName": "Marrom Escuro",
+        "canonical": "#2c1f14",
+        "tonalRamp": [
+          "oklch(15% 0.030 56)",
+          "oklch(26% 0.030 56)",
+          "oklch(37% 0.030 56)",
+          "oklch(48% 0.030 56)",
+          "oklch(60% 0.030 56)",
+          "oklch(71% 0.030 56)",
+          "oklch(83% 0.030 56)",
+          "oklch(95% 0.030 56)"
+        ]
+      },
+      "texto": {
+        "role": "neutral",
+        "displayName": "Marrom Texto",
+        "canonical": "#6f5c46",
+        "tonalRamp": [
+          "oklch(15% 0.031 72)",
+          "oklch(26% 0.031 72)",
+          "oklch(37% 0.031 72)",
+          "oklch(48% 0.031 72)",
+          "oklch(60% 0.031 72)",
+          "oklch(71% 0.031 72)",
+          "oklch(83% 0.031 72)",
+          "oklch(95% 0.031 72)"
+        ]
+      },
+      "terracota": {
+        "role": "primary",
+        "displayName": "Terracota",
+        "canonical": "#8c5a34",
+        "tonalRamp": [
+          "oklch(15% 0.078 55)",
+          "oklch(26% 0.078 55)",
+          "oklch(37% 0.078 55)",
+          "oklch(48% 0.078 55)",
+          "oklch(60% 0.078 55)",
+          "oklch(71% 0.078 55)",
+          "oklch(83% 0.078 55)",
+          "oklch(95% 0.078 55)"
+        ]
+      },
+      "terra-escura": {
+        "role": "primary",
+        "displayName": "Terracota Escuro",
+        "canonical": "#70401d",
+        "tonalRamp": [
+          "oklch(15% 0.077 52)",
+          "oklch(26% 0.077 52)",
+          "oklch(37% 0.077 52)",
+          "oklch(48% 0.077 52)",
+          "oklch(60% 0.077 52)",
+          "oklch(71% 0.077 52)",
+          "oklch(83% 0.077 52)",
+          "oklch(95% 0.077 52)"
+        ]
+      },
+      "dourado": {
+        "role": "secondary",
+        "displayName": "Dourado Suave",
+        "canonical": "#c08a55",
+        "tonalRamp": [
+          "oklch(15% 0.075 65)",
+          "oklch(26% 0.075 65)",
+          "oklch(37% 0.075 65)",
+          "oklch(48% 0.075 65)",
+          "oklch(60% 0.075 65)",
+          "oklch(71% 0.075 65)",
+          "oklch(83% 0.075 65)",
+          "oklch(95% 0.075 65)"
+        ]
+      },
+      "linha": {
+        "role": "neutral",
+        "displayName": "Linha",
+        "canonical": "rgba(59, 42, 28, 0.16)"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Só o título do hero. Limitado a 22ch."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Título de seção. Limitado a 26ch quando divide a linha com um resumo."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Título de item dentro de uma seção — cada momento da timeline."
+      },
+      "quote": {
+        "displayName": "Quote",
+        "purpose": "Exclusivo da faixa escura. Peso 400 porque texto claro sobre marrom já ganha peso aparente."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Texto corrido, máximo 46ch. Variantes de seção descem a 14px / 13.5px."
+      },
+      "body-secao": {
+        "displayName": "Body-seção",
+        "purpose": "Texto dentro de uma seção: resumo dos momentos, texto de cada momento, itens do menu do celular. Medida de 34ch a 38ch."
+      },
+      "action": {
+        "displayName": "Action",
+        "purpose": "O botão sólido. Todo CTA do site usa este degrau."
+      },
+      "link": {
+        "displayName": "Link",
+        "purpose": "Links sublinhados e o menu de desktop."
+      },
+      "action-pill": {
+        "displayName": "Action-pill",
+        "purpose": "O botão pill do cabeçalho. Abaixo de 768px cai para 11px como variante responsiva, não como degrau novo."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Kicker terracota em caixa alta que abre cada seção."
+      }
+    },
+    "shadows": [
+      {
+        "name": "filete-cabecalho",
+        "value": "0 1px 0 rgba(59, 42, 28, 0.16)",
+        "purpose": "Não é sombra: é o filete que separa o cabeçalho grudado do conteúdo que passa por baixo."
+      },
+      {
+        "name": "painel-flutuante",
+        "value": "0 14px 32px -14px rgba(44, 31, 20, 0.55), inset 0 1px 0 rgba(232, 223, 208, 0.13)",
+        "purpose": "O único elemento que de fato flutua: o painel do menu, absoluto sobre a foto do hero."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-padrao",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Easing padrão do sistema. Aparece em 11 lugares: entrada do menu, revelações, cabeçalho retrátil, barra fixa."
+      },
+      {
+        "name": "ease-saida",
+        "value": "cubic-bezier(0.4, 0, 1, 1)",
+        "purpose": "Só na saída do menu. Entrada quer ser percebida, saída quer sair da frente."
+      },
+      {
+        "name": "ease-assentamento",
+        "value": "cubic-bezier(0.2, 0.7, 0.3, 1)",
+        "purpose": "Assentamento lento das fotos (1,6s) após a revelação."
+      },
+      {
+        "name": "dur-saida",
+        "value": "0.14s",
+        "purpose": "Fade de saída do painel."
+      },
+      {
+        "name": "dur-estado",
+        "value": "0.25s",
+        "purpose": "Troca de estado em botão e link."
+      },
+      {
+        "name": "dur-revelacao",
+        "value": "0.85s",
+        "purpose": "Entrada de bloco no viewport."
+      },
+      {
+        "name": "dur-assentamento",
+        "value": "1.6s",
+        "purpose": "Foto assentando: escala e filtro voltando ao repouso."
+      },
+      {
+        "name": "dur-respiracao",
+        "value": "24s",
+        "purpose": "Ciclo de respiração da foto do hero. Pausado quando o menu abre."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "cabecalho",
+        "value": "768px"
+      }
+    ],
+    "typographyExceptions": [
+      {
+        "size": "13.5px",
+        "where": ".momentos__nota p",
+        "reason": "parágrafo único herdado; não é degrau"
+      },
+      {
+        "size": "11px",
+        "where": ".cabecalho .btn-pill (<768px)",
+        "reason": "variante responsiva do action-pill; é o que faz marca, kebab e botão caberem em 360px"
+      },
+      {
+        "size": "8px",
+        "where": ".marca__selo",
+        "reason": "texto \"Logo\" placeholder; sai quando a marca tiver símbolo"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "A ação principal. Todo caminho para o WhatsApp passa por ele.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Ver se a data está livre</a>",
+      "css": ".ds-btn-primary { display:inline-block; text-align:center; font:500 13px/1 Inter, system-ui, sans-serif; color:var(--areia,#e8dfd0); background:var(--marrom,#3b2a1c); border-radius:6px; padding:17px 26px; text-decoration:none; transition:background .25s ease; } .ds-btn-primary:hover { background:var(--marrom-escuro,#2c1f14); } .ds-btn-primary:focus-visible { outline:2px solid var(--terracota,#8c5a34); outline-offset:3px; }"
+    },
+    {
+      "name": "Pill Button",
+      "kind": "button",
+      "refersTo": "button-pill",
+      "description": "Ação secundária no cabeçalho. Contorno, nunca preenchimento em repouso.",
+      "html": "<a class=\"ds-btn-pill\" href=\"#\">Ver a data</a>",
+      "css": ".ds-btn-pill { display:inline-block; font:500 12px/1 Inter, system-ui, sans-serif; color:var(--terracota,#8c5a34); border:1px solid var(--terracota,#8c5a34); border-radius:999px; padding:12px 18px; white-space:nowrap; text-decoration:none; transition:background .25s ease, color .25s ease; } .ds-btn-pill:hover { background:var(--terracota,#8c5a34); color:var(--areia,#e8dfd0); }"
+    },
+    {
+      "name": "Underline Link",
+      "kind": "custom",
+      "refersTo": "link-underline",
+      "description": "Link de texto: filete de 1px a 3px abaixo da palavra, nunca text-decoration.",
+      "html": "<a class=\"ds-link\" href=\"#\">Ouvir o repertório</a>",
+      "css": ".ds-link { font:400 12.5px/1.5 Inter, system-ui, sans-serif; color:var(--terracota,#8c5a34); border-bottom:1px solid rgba(140,90,52,.35); padding-bottom:3px; text-decoration:none; }"
+    },
+    {
+      "name": "Section Kicker",
+      "kind": "custom",
+      "description": "Abre toda seção. Caixa alta, 10px, 0.24em de espaçamento, terracota.",
+      "html": "<span class=\"ds-kicker\">Voz e violão ao vivo</span>",
+      "css": ".ds-kicker { font:500 10px/1.5 Inter, system-ui, sans-serif; letter-spacing:.24em; text-transform:uppercase; color:var(--terracota,#8c5a34); }"
+    },
+    {
+      "name": "Brand Mark",
+      "kind": "nav",
+      "description": "Selo quadrado de 38px em contorno, nome em caixa alta espaçada e a dupla em Cormorant itálico. O texto do selo é placeholder até a marca ter símbolo.",
+      "html": "<div class=\"ds-marca\"><span class=\"ds-marca__selo\">Logo</span><span class=\"ds-marca__linhas\"><span class=\"ds-marca__nome\">Duo Con Amore</span><span class=\"ds-marca__dupla\">Thyago &amp; Júlia</span></span></div>",
+      "css": ".ds-marca { display:flex; align-items:center; gap:14px; } .ds-marca__selo { width:38px; height:38px; border:1px solid rgba(59,42,28,.25); border-radius:2px; flex:none; display:grid; place-items:center; font:500 8px/1 Inter, system-ui, sans-serif; letter-spacing:.08em; text-transform:uppercase; color:var(--texto,#6f5c46); } .ds-marca__linhas { display:flex; flex-direction:column; gap:3px; } .ds-marca__nome { font:500 10px/1 Inter, system-ui, sans-serif; letter-spacing:.22em; text-transform:uppercase; color:var(--terracota,#8c5a34); white-space:nowrap; } .ds-marca__dupla { font:italic 400 13px/1 'Cormorant Garamond', Georgia, serif; color:var(--texto,#6f5c46); white-space:nowrap; }"
+    },
+    {
+      "name": "Quote Band",
+      "kind": "custom",
+      "description": "Componente de assinatura: faixa marrom de largura total, citação em Cormorant itálico 400 e um filete dourado de 44px embaixo.",
+      "html": "<section class=\"ds-citacao\"><div class=\"ds-citacao__interno\"><p class=\"ds-citacao__texto\">A gente queria que a cerimônia tivesse voz de verdade, não playback.</p><div class=\"ds-citacao__risco\"></div></div></section>",
+      "css": ".ds-citacao { background:var(--marrom,#3b2a1c); padding:clamp(56px,8vw,110px) clamp(20px,5vw,72px); } .ds-citacao__interno { max-width:760px; margin:0 auto; text-align:center; } .ds-citacao__texto { font:italic 400 clamp(24px,4.4vw,44px)/1.4 'Cormorant Garamond', Georgia, serif; color:var(--areia,#e8dfd0); margin:0; } .ds-citacao__risco { width:44px; height:1px; background:var(--dourado,#c08a55); margin:28px auto 0; }"
+    },
+    {
+      "name": "Timeline Moment",
+      "kind": "custom",
+      "description": "Componente de assinatura, marcado para revisão de produto: o trilho vertical não agrada e os três momentos devem ser repensados sem ele. Preserve o conteúdo, não a linha.",
+      "html": "<div class=\"ds-momento\"><div class=\"ds-momento__marcador\"><span class=\"ds-momento__bolinha\"></span><span class=\"ds-momento__numeral\">01</span></div><div><h3 class=\"ds-momento__titulo\">A entrada</h3><p class=\"ds-momento__texto\">O momento em que todo mundo vira para trás.</p></div></div>",
+      "css": ".ds-momento { display:grid; grid-template-columns:auto minmax(0,1fr); gap:clamp(16px,3vw,32px); align-items:start; } .ds-momento__marcador { display:flex; flex-direction:column; align-items:center; gap:10px; padding-top:6px; } .ds-momento__bolinha { width:23px; height:23px; border-radius:50%; border:1px solid var(--terracota,#8c5a34); background:var(--areia-fundo,#e2d7c5); display:flex; align-items:center; justify-content:center; } .ds-momento__bolinha::after { content:''; width:5px; height:5px; border-radius:50%; background:var(--terracota,#8c5a34); } .ds-momento__numeral { font:italic 500 15px/1 'Cormorant Garamond', Georgia, serif; color:var(--terracota,#8c5a34); background:var(--areia-fundo,#e2d7c5); padding:4px 6px; } .ds-momento__titulo { font:italic 500 clamp(24px,3.2vw,32px)/1.24 'Cormorant Garamond', Georgia, serif; color:var(--marrom,#3b2a1c); margin:0 0 10px; } .ds-momento__texto { font:400 14px/1.8 Inter, system-ui, sans-serif; color:var(--texto,#6f5c46); margin:0; max-width:38ch; }"
+    },
+    {
+      "name": "Glass Menu Panel",
+      "kind": "nav",
+      "description": "O único material distinto do sistema: vidro escuro sobre a foto do hero. O brightness(0.45) comprime a faixa dinâmica da foto antes da composição — é o que permite o véu ficar em 68% sem o texto perder contraste.",
+      "html": "<div class=\"ds-painel\"><nav><a href=\"#\">Os momentos</a><a href=\"#\">O duo</a><a href=\"#\">Contato</a></nav></div>",
+      "css": ".ds-painel { width:232px; padding:6px; border:1px solid rgba(232,223,208,.15); border-radius:3px; background-color:rgba(44,31,20,.68); background-image:linear-gradient(180deg, rgba(232,223,208,.07), rgba(232,223,208,0) 58%); -webkit-backdrop-filter:blur(20px) brightness(.45) saturate(1.1); backdrop-filter:blur(20px) brightness(.45) saturate(1.1); box-shadow:0 14px 32px -14px rgba(44,31,20,.55), inset 0 1px 0 rgba(232,223,208,.13); } .ds-painel nav { display:flex; flex-direction:column; } .ds-painel nav a { position:relative; display:flex; align-items:center; min-height:48px; padding:0 14px; border-radius:2px; font:500 14px/1 Inter, system-ui, sans-serif; color:rgba(232,223,208,.92); text-decoration:none; transition:background-color .15s ease, color .15s ease; } .ds-painel nav a + a::before { content:''; position:absolute; top:0; left:14px; right:14px; height:1px; background:rgba(232,223,208,.08); } .ds-painel nav a::after { content:''; position:absolute; left:14px; bottom:11px; height:1px; width:20px; background:var(--dourado,#c08a55); transform:scaleX(0); transform-origin:left center; transition:transform .22s cubic-bezier(.22,1,.36,1); } .ds-painel nav a:hover { background-color:rgba(232,223,208,.1); color:var(--areia,#e8dfd0); } .ds-painel nav a:hover::after { transform:scaleX(1); } .ds-painel nav a:focus-visible { outline:2px solid var(--dourado,#c08a55); outline-offset:-3px; }"
+    },
+    {
+      "name": "Back to Top",
+      "kind": "button",
+      "refersTo": "back-to-top",
+      "description": "Círculo de 44px em contorno terracota. 44px é o alvo de toque mínimo, não uma escolha estética.",
+      "html": "<a class=\"ds-topo\" href=\"#topo\" aria-label=\"Voltar ao início\"><svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><path d=\"M12 19V5M5 12l7-7 7 7\"/></svg></a>",
+      "css": ".ds-topo { width:44px; height:44px; border-radius:50%; border:1px solid var(--terracota,#8c5a34); color:var(--terracota,#8c5a34); display:grid; place-items:center; transition:background .25s ease, color .25s ease; } .ds-topo:hover { background:var(--terracota,#8c5a34); color:var(--areia,#e8dfd0); } .ds-topo svg { transition:transform .3s cubic-bezier(.22,1,.36,1); } .ds-topo:hover svg { transform:translateY(-2px); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "A Sala ao Entardecer",
+    "overview": "O sistema inteiro é a luz de fim de tarde entrando numa sala onde alguém está tocando. Nenhuma superfície é branca, nenhum texto é preto: tudo já passou pelo filtro dessa hora. O fundo é bege areia, o texto é marrom, o acento é terracota e o dourado aparece só como um fio de 1px. É por isso que as fotos levam um filtro sépia e que a foto do hero respira num ciclo de 24 segundos — a sala tem ar, e o ar se move devagar.\n\nO clima é elegante, contido e cerimonioso. Elegante na tipografia: todo título é Cormorant Garamond em itálico, e o itálico não é ênfase, é o estado normal do título. Contido na frequência: o terracota é o acento e aparece pouco, porque a raridade é o que lhe dá peso. Cerimonioso na estrutura: a citação vive numa faixa marrom escura com um filete dourado de 44px embaixo, tratando a fala do casal como o momento formal que ela é.\n\nO oposto disso é o site que se explica gritando. Aqui nada precisa de card, de sombra ou de ícone para ser lido — a hierarquia sai do fundo, do filete de 1px e do tamanho do tipo. A página tem um único trabalho: fazer o casal abrir o WhatsApp.",
+    "keyCharacteristics": [
+      "Nenhum cinza puro, nenhum branco puro, nenhum preto puro — toda cor tem temperatura",
+      "Itálico serifado em 100% dos títulos; Inter só no corpo, nos rótulos e nos botões",
+      "Praticamente sem sombra: duas no arquivo inteiro, ambas funcionais",
+      "Zero card e zero container aninhado — seção se separa por fundo e filete",
+      "Medida de leitura curta e deliberada (34ch a 46ch)",
+      "Movimento longo e orgânico: 0,85s a 24s, nunca uma transição seca",
+      "Mobile-first sem media query, exceto onde o cabeçalho exige (768px)"
+    ],
+    "rules": [
+      {
+        "name": "A Regra do Acento Raro",
+        "body": "Terracota nunca preenche um bloco. É texto, filete de 1px, contorno ou ponto de 5px. No único lugar onde vira fundo — o hover da pill e do voltar-ao-início — é resposta ao cursor, não estado de repouso.",
+        "section": "colors"
+      },
+      {
+        "name": "A Regra da Temperatura",
+        "body": "Nenhum #fff, nenhum #000, nenhum cinza neutro entra no arquivo. Cor nova nasce como token no :root ou não nasce.",
+        "section": "colors"
+      },
+      {
+        "name": "A Regra das Duas Fontes",
+        "body": "Existem duas famílias e não haverá uma terceira. Precisou de outra voz? Resolve com peso, tamanho, itálico ou espaçamento dentro das duas que já existem.",
+        "section": "typography"
+      },
+      {
+        "name": "A Regra da Medida Curta",
+        "body": "Nenhum bloco de texto passa de 46ch. É o que mantém a leitura de coluna estreita mesmo quando a tela é larga.",
+        "section": "typography"
+      },
+      {
+        "name": "A Regra do auto-fit",
+        "body": "Coluna nova entra por minmax(), não por breakpoint. Se você está escrevendo @media para mudar contagem de coluna, o minmax está errado.",
+        "section": "layout"
+      },
+      {
+        "name": "A Regra da Rede de Segurança",
+        "body": "Nenhuma animação pode deixar conteúdo invisível se o JS falhar. O estado de repouso do CSS é o estado visível; a animação só existe dentro de uma classe que o JS adiciona.",
+        "section": "components"
+      },
+      {
+        "name": "A Regra do Dedo",
+        "body": "No celular, todo efeito nasce de rolar a página ou de :active. Hover é extra de desktop e vive dentro de @media (hover: hover) — nunca é o único caminho para um efeito existir.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do declarar cor nova como token no :root de estilos.css antes de usar. Hex solto em componente não entra.",
+      "Do usar repeat(auto-fit, minmax(Xpx, 1fr)) e clamp() para responsividade. A media query de 768px do cabeçalho é a exceção documentada, não o padrão.",
+      "Do manter todo título em Cormorant Garamond itálico 500 e todo corpo em Inter 400.",
+      "Do dar alt descritivo e loading=\"lazy\" a toda imagem, menos a foto do hero.",
+      "Do manter o texto visível em src/conteudo.js e os links de WhatsApp em src/whatsapp.js via <BotaoWhatsapp contexto=\"chave\" />.",
+      "Do testar em 360×740, 375×667, 375×812, 390×844, 412×915 e 768×1024 antes de fechar qualquer ajuste visual.",
+      "Do usar contorno de 1px em vez de preenchimento quando um elemento precisar de forma."
+    ],
+    "donts": [
+      "Don't parecer landing de SaaS: card dentro de card, gradiente roxo-azul, ícone em quadradinho arredondado acima do título, sombra em tudo.",
+      "Don't parecer fornecedor de festa: dourado brilhante, fonte script, coração, superlativo sobre o dia mais feliz.",
+      "Don't parecer portfólio de fotógrafo: foto full-bleed engolindo a tela, menu escondido, texto mínimo.",
+      "Don't adicionar sombra decorativa. As duas que existem são funcionais; superfície em repouso não levita.",
+      "Don't introduzir uma terceira família tipográfica, nem cinza puro, branco puro ou preto puro.",
+      "Don't usar easing de bounce ou elástico. O vocabulário é cubic-bezier(0.22, 1, 0.36, 1).",
+      "Don't fazer um efeito depender de hover ou de clique no celular.",
+      "Don't deixar overflow-x: hidden só no body — precisa estar no <html> também.",
+      "Don't transformar o snippet do GA4 em carregamento dinâmico. A verificação do Search Console lê o HTML cru.",
+      "Don't redesenhar o que não foi pedido. Mudança pedida é mudança cirúrgica."
+    ]
+  }
+}

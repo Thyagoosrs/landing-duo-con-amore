@@ -4,20 +4,29 @@ import BotaoWhatsapp from './BotaoWhatsapp.jsx';
 // O título é quebrado em hero.linhas: com an-titulo ligado, cada linha sobe
 // de dentro da própria máscara (90ms entre uma e outra). Sem a classe — ou
 // sem JS — as linhas são spans comuns e o texto está sempre visível.
+//
+// Os três blocos (foto, títulos, texto+ações) são irmãos dentro de .hero__grade
+// porque as duas composições precisam remontá-los de formas diferentes:
+//   celular  — títulos sobrepostos no rodapé da foto (grid, mesma célula)
+//   ≥1024px  — foto de um lado, todo o texto do outro, sem nada sobre a foto
+// Ver o bloco "hero" em estilos.css.
 export default function Hero() {
   return (
     <section className="hero">
-      <div className="hero__quadro">
-        <img
-          className="hero__foto"
-          src={hero.foto}
-          width={hero.largura}
-          height={hero.altura}
-          alt={hero.alt}
-          fetchpriority="high"
-        />
-        <div className="hero__veu" aria-hidden="true"></div>
-        <div className="hero__sobreposto">
+      <div className="hero__grade">
+        <div className="hero__quadro">
+          <img
+            className="hero__foto"
+            src={hero.foto}
+            width={hero.largura}
+            height={hero.altura}
+            alt={hero.alt}
+            fetchpriority="high"
+          />
+          <div className="hero__veu" aria-hidden="true"></div>
+        </div>
+
+        <div className="hero__titulos">
           <div className="kicker hero__kicker revelar" data-cascata="1">
             {hero.kicker}
           </div>
@@ -29,14 +38,15 @@ export default function Hero() {
             ))}
           </h1>
         </div>
-      </div>
-      <div className="hero__abaixo">
-        <p className="corpo revelar" data-cascata="3">
-          {hero.texto}
-        </p>
-        <div className="hero__acoes revelar" data-cascata="4">
-          <BotaoWhatsapp contexto="hero" />
-          <BotaoWhatsapp contexto="semData" variante="link" />
+
+        <div className="hero__abaixo">
+          <p className="corpo revelar" data-cascata="3">
+            {hero.texto}
+          </p>
+          <div className="hero__acoes revelar" data-cascata="4">
+            <BotaoWhatsapp contexto="hero" />
+            <BotaoWhatsapp contexto="semData" variante="link" />
+          </div>
         </div>
       </div>
     </section>

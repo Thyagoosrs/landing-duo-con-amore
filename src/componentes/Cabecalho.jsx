@@ -7,12 +7,18 @@ import { medir } from '../medicao.js';
 // é ela que gruda no topo e recolhe ao descer — ver useRolagem.
 //
 // No celular o cabeçalho é uma linha só: logo, o menu (⋮) e o botão de
-// WhatsApp. Os três links de navegação ficam atrás do kebab, num painel que
-// desliza — sem isso, três linhas de cabeçalho empurravam a foto do hero
-// para fora da primeira tela (o achado nº2 da auditoria original). A partir
-// de 768px (ver estilos.css) sobra espaço de sobra: o kebab some e os
-// mesmos links aparecem sempre visíveis, lado a lado — por isso a marcação
-// existe duas vezes (uma para cada modo) e o CSS decide qual mostrar.
+// WhatsApp. Os três links de navegação ficam atrás do kebab, num cartão que
+// FLUTUA sobre a foto do hero (position:absolute) — não empurra a página.
+// Sem isso, três linhas de cabeçalho empurravam a foto para fora da primeira
+// tela (o achado nº2 da auditoria original). A partir de 768px (ver
+// estilos.css) sobra espaço: o kebab some e os mesmos links aparecem sempre
+// visíveis, lado a lado — por isso a marcação existe duas vezes.
+//
+// Fecha por: toque fora, Esc (devolvendo o foco ao kebab), clique num link e
+// rolagem além de 24px. O limiar existe para um arraste acidental de 2px não
+// matar o menu.
+const LIMIAR_ROLAGEM = 24;
+
 function aoClicarLink(item, fechar) {
   medir('menu_' + item.ancora.slice(1));
   if (fechar) fechar();
@@ -22,32 +28,39 @@ export default function Cabecalho() {
   const [menuAberto, setMenuAberto] = useState(false);
   const kebabRef = useRef(null);
   const painelRef = useRef(null);
-  const navRef = useRef(null);
 
-  // altura real do painel, medida via JS (scrollHeight ignora o corte visual
-  // do overflow:hidden) — mesma técnica do useFioTimeline, sem depender de
-  // truques de grid-template-rows que não resolvem em contêiner de altura automática.
-  useEffect(() => {
-    if (!painelRef.current || !navRef.current) return;
-    painelRef.current.style.maxHeight = menuAberto ? navRef.current.scrollHeight + 'px' : '0px';
-  }, [menuAberto]);
-
-  // fecha ao tocar fora do kebab e do painel, ou ao apertar Esc
   useEffect(() => {
     if (!menuAberto) return;
+
+    // a classe no <html> é o que impede o cabeçalho de recolher com o menu
+    // aberto e pausa a respiração da foto atrás do vidro (ver estilos.css)
+    const raiz = document.documentElement;
+    raiz.classList.add('menu-aberto');
+
     const aoTocarFora = (e) => {
       const foraDoKebab = kebabRef.current && !kebabRef.current.contains(e.target);
       const foraDoPainel = painelRef.current && !painelRef.current.contains(e.target);
       if (foraDoKebab && foraDoPainel) setMenuAberto(false);
     };
     const aoTeclar = (e) => {
-      if (e.key === 'Escape') setMenuAberto(false);
+      if (e.key === 'Escape') {
+        setMenuAberto(false);
+        if (kebabRef.current) kebabRef.current.focus();
+      }
     };
+    const yAbertura = window.scrollY;
+    const aoRolar = () => {
+      if (Math.abs(window.scrollY - yAbertura) > LIMIAR_ROLAGEM) setMenuAberto(false);
+    };
+
     document.addEventListener('pointerdown', aoTocarFora);
     document.addEventListener('keydown', aoTeclar);
+    window.addEventListener('scroll', aoRolar, { passive: true });
     return () => {
+      raiz.classList.remove('menu-aberto');
       document.removeEventListener('pointerdown', aoTocarFora);
       document.removeEventListener('keydown', aoTeclar);
+      window.removeEventListener('scroll', aoRolar);
     };
   }, [menuAberto]);
 
@@ -91,13 +104,13 @@ export default function Cabecalho() {
         </div>
       </div>
 
-      {/* celular (<768px): atrás do kebab — ver estilos.css */}
+      {/* celular (<768px): cartão flutuante atrás do kebab — ver estilos.css */}
       <div
         className={'cabecalho__painel' + (menuAberto ? ' aberto' : '')}
         id="menu-secoes"
         ref={painelRef}
       >
-        <nav ref={navRef} aria-label="Seções da página">
+        <nav aria-label="Seções da página">
           {navegacao.map((item) => (
             <a key={item.ancora} href={item.ancora} onClick={() => aoClicarLink(item, () => setMenuAberto(false))}>
               {item.rotulo}
