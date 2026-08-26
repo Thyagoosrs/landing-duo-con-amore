@@ -37,6 +37,14 @@ npm run build    # dist/
 9. **No celular, toda animação aparece rolando a página** (entrada na tela via observer, ou presa ao scroll) — nunca dependa de hover ou clique para o efeito existir. Hover/clique pode existir como extra no desktop, sempre dentro de `@media (hover: hover)`.
 10. Mudança pedida é mudança cirúrgica: não redesenhar o que não foi pedido.
 11. Rodar `npm run build` antes de considerar a tarefa concluída.
+12. **Testar em vários aparelhos reais antes de finalizar qualquer ajuste visual.**
+    Mínimo: 360×740 (Galaxy S8, o mais estreito), 375×667 (iPhone SE, o mais
+    baixo), 375×812, 390×844, 412×915 e 768×1024. O que checar em cada um:
+    `innerWidth === largura do aparelho` e `scrollWidth` sem excesso (largura da
+    página correta), nome da marca numa linha, kicker do hero numa linha, nada
+    sobrepondo nada, e nenhum elemento fora da tela que não esteja cortado por
+    um ancestral com `overflow: hidden`. Medir com navegador de verdade, rolando
+    a página inteira e voltando ao topo — bug de largura só aparece assim.
 12. **Não transformar o snippet do GA4 em carregamento dinâmico.** A tag
     `<script async src="https://www.googletagmanager.com/gtag/js?id=...">` no `index.html`
     tem que continuar escrita por extenso. A propriedade no Google Search Console é

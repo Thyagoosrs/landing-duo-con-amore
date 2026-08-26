@@ -8,7 +8,14 @@ export default function Hero() {
   return (
     <section className="hero">
       <div className="hero__quadro">
-        <img className="hero__foto" src={hero.foto} alt={hero.alt} fetchpriority="high" />
+        <img
+          className="hero__foto"
+          src={hero.foto}
+          width={hero.largura}
+          height={hero.altura}
+          alt={hero.alt}
+          fetchpriority="high"
+        />
         <div className="hero__veu" aria-hidden="true"></div>
         <div className="hero__sobreposto">
           <div className="kicker hero__kicker revelar" data-cascata="1">

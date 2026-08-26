@@ -21,6 +21,11 @@
 *::before,
 *::after { box-sizing: border-box; }
 
+/* overflow-x:hidden no <html> junto com o body: só no body, o Chrome do
+   Android ignora e alarga a página quando uma animação escala uma foto
+   (scale transborda a caixa) — a página inteira ficava ~45px mais larga que
+   a tela e o cabeçalho e o hero saíam de enquadramento. */
+html { overflow-x: hidden; }
 body {
   margin: 0;
   background: var(--areia);
@@ -156,8 +161,29 @@ html.an-cabecalho .cabecalho__faixa.recolhido { transform: translateY(-102%); }
    Abaixo disso os mesmos links moram em .cabecalho__painel, atrás do kebab. */
 .cabecalho__nav-largo { display: none; }
 
-/* --- cabeçalho: kebab + botão, sempre numa linha só com a marca --- */
-.cabecalho__direita { display: flex; align-items: center; gap: 6px; flex: none; }
+/* --- cabeçalho: kebab + botão, sempre numa linha só com a marca ---
+   No celular a soma marca + kebab + botão passava da largura da tela (o botão
+   vazava 45px num Galaxy S8 de 360px). Em vez de deixar quebrar, os três
+   encolhem: só abaixo de 768px, e voltam ao tamanho cheio no desktop. */
+.cabecalho__direita { display: flex; align-items: center; gap: 4px; flex: none; }
+/* padding lateral menor que o --pad-x da página: nos 360px do Galaxy S8 a
+   linha só fecha assim (era o último par de pixels vazando). */
+.cabecalho { padding-left: 16px; padding-right: 16px; }
+.cabecalho .btn-pill { font-size: 11px; padding: 11px 12px; }
+.marca { gap: 10px; }
+.marca__selo { width: 32px; height: 32px; }
+.marca__nome { letter-spacing: 0.14em; }
+.marca__dupla { font-size: 12px; }
+
+@media (min-width: 768px) {
+  .cabecalho__direita { gap: 6px; }
+  .cabecalho { padding-left: var(--pad-x); padding-right: var(--pad-x); }
+  .cabecalho .btn-pill { font-size: 12px; padding: 12px 18px; }
+  .marca { gap: 14px; }
+  .marca__selo { width: 38px; height: 38px; }
+  .marca__nome { letter-spacing: 0.22em; }
+  .marca__dupla { font-size: 13px; }
+}
 .kebab {
   width: 32px;
   height: 32px;
@@ -209,7 +235,17 @@ html.an-cabecalho .cabecalho__faixa.recolhido { transform: translateY(-102%); }
 /* --- hero --- */
 .hero { padding: clamp(8px, 2vw, 20px) 0 clamp(52px, 8vw, 104px); }
 .hero__quadro { position: relative; max-width: 780px; margin: 0 auto; overflow: hidden; /* a respiração da foto acontece dentro da moldura */ }
-.hero__foto { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+/* A moldura nunca passa de ~68% da altura da tela: numa tela baixa (iPhone SE,
+   667px) o 4:5 deixava a foto altíssima e o rosto do casal saía de quadro,
+   além de empurrar o texto do hero para fora da primeira dobra.
+   object-position mantém os rostos visíveis quando o corte acontece. */
+.hero__foto {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: 68svh;
+  object-fit: cover;
+  object-position: center 28%;
+}
 .hero__veu {
   position: absolute;
   inset: auto 0 0 0;
@@ -229,7 +265,14 @@ html.an-cabecalho .cabecalho__faixa.recolhido { transform: translateY(-102%); }
   inset: auto 0 0 0;
   padding: 0 clamp(20px, 5vw, 40px) clamp(18px, 3vw, 28px);
 }
-.hero__kicker { color: var(--terra-escura); margin-bottom: 16px; }
+/* letter-spacing e corpo por clamp: com os 0.24em do .kicker padrão, a linha
+   "VOZ E VIOLÃO AO VIVO · SÃO PAULO E REGIÃO" quebrava em duas nos 360px. */
+.hero__kicker {
+  color: var(--terra-escura);
+  margin-bottom: 16px;
+  font-size: clamp(8.5px, 2.4vw, 10px);
+  letter-spacing: clamp(0.12em, 0.6vw, 0.24em);
+}
 .hero__titulo {
   font: italic 500 clamp(32px, 6.4vw, 62px) / 1.16 var(--serif);
   color: var(--marrom);
