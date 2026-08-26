@@ -37,6 +37,8 @@ export default function Momentos() {
                   <Figura
                     className="momento__figura"
                     src={m.foto}
+                    width={m.largura}
+                    height={m.altura}
                     alt={m.alt}
                     foco={m.foco}
                     revelacao={i % 2 ? 'direita' : 'esquerda'}

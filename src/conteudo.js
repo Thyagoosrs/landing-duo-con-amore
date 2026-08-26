@@ -27,6 +27,11 @@ export const hero = {
   texto:
     'Do primeiro acorde da cerimônia à última música da festa — voz e violão a dois, com a delicadeza de quem também vive um grande amor.',
   foto: midia('hero.jpg'),
+  // largura/altura reais do arquivo: viram width/height HTML no <img>, não só
+  // CSS — sem isso, grid com auto-fit (.duo, .galeria__grade) não sabe o
+  // tamanho da foto antes dela carregar e erra a largura da página inteira.
+  largura: 720,
+  altura: 1280,
   alt: 'Thyago e Júlia abraçados e sorrindo, com luzes quentes de festa ao fundo',
 };
 
@@ -42,6 +47,8 @@ export const momentos = {
       texto:
         'A entrada, as alianças, a saída. Repertório sacro e clássico, ensaiado com o ritmo do seu roteiro.',
       foto: midia('momento-cerimonia.jpg'),
+      largura: 960,
+      altura: 1280,
       alt: 'Júlia ao microfone e Thyago ao violão diante do altar da igreja',
       // foco (opcional): qual parte da foto aparece na moldura 5:4 da timeline.
       // 'center 100%' ancora embaixo (mostra mais corpo); 'center 0%' ancora em cima.
@@ -53,6 +60,8 @@ export const momentos = {
       texto:
         'O brinde, o abraço, o reencontro. MPB e clássicos nacionais na medida certa da conversa.',
       foto: midia('momento-coquetel.jpg'),
+      largura: 1600,
+      altura: 1066,
       alt: 'Convidados brindando com taças de espumante no coquetel',
     },
     {
@@ -61,6 +70,8 @@ export const momentos = {
       texto:
         'A primeira dança, só de vocês — e o pop que levanta o salão até a última música.',
       foto: midia('momento-festa.jpg'),
+      largura: 1400,
+      altura: 1120,
       alt: 'Convidados dançando na pista sob globos espelhados',
     },
   ],
@@ -76,6 +87,8 @@ export const duo = {
     'Levamos o nosso som. Chegamos antes, alinhamos o roteiro com a cerimonialista e ensaiamos a entrada no local.',
   ],
   foto: midia('duo.jpg'),
+  largura: 720,
+  altura: 1280,
   alt: 'Thyago e Júlia lado a lado, elegantes, no salão de um casamento',
 };
 
@@ -84,8 +97,8 @@ export const citacao = 'Não cantamos músicas. Cantamos o amor.';
 export const galeria = {
   kicker: 'Galeria',
   fotos: [
-    { foto: midia('galeria-1.jpg'), alt: 'Júlia cantando no coro da igreja, com vitrais coloridos ao fundo' },
-    { foto: midia('galeria-2.jpg'), alt: 'Thyago e Júlia juntos no salão da igreja antes da cerimônia' },
+    { foto: midia('galeria-1.jpg'), largura: 576, altura: 1024, alt: 'Júlia cantando no coro da igreja, com vitrais coloridos ao fundo' },
+    { foto: midia('galeria-2.jpg'), largura: 720, altura: 1280, alt: 'Thyago e Júlia juntos no salão da igreja antes da cerimônia' },
   ],
 };
 

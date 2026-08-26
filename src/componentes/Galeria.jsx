@@ -15,6 +15,8 @@ export default function Galeria() {
             key={g.foto}
             className="galeria__figura"
             src={g.foto}
+            width={g.largura}
+            height={g.altura}
             alt={g.alt}
             revelacao={i % 2 ? 'direita' : 'esquerda'}
             parallax={FATORES[i % FATORES.length]}
