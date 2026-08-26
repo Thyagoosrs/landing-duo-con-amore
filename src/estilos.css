@@ -340,16 +340,29 @@ html.an-revelacao .revelar.visivel {
   transform: none;
   transition: opacity 0.85s ease, transform 0.85s cubic-bezier(0.22, 0.7, 0.3, 1);
 }
-/* a máscara mora na .lente, NUNCA na .figura observada: clip de área zero
-   no alvo faz o IntersectionObserver nunca disparar e a foto nunca aparecer */
+/* Revelação das fotos, em dois mundos:
+   — celular (sem hover): dissolve suave, sem máscara — clip-path serrilha
+     em tela pequena e a lateral ficava truncada;
+   — desktop (hover + ponteiro fino): máscara abrindo, com lado alternado.
+   A máscara mora na .lente, NUNCA na .figura observada: clip de área zero
+   no alvo faz o IntersectionObserver nunca disparar e a foto nunca aparecer. */
 html.an-revelacao .figura.revelar { opacity: 1; transform: none; }
-html.an-revelacao .figura.revelar .lente { clip-path: inset(0 0 100% 0); }
-/* data-revela alterna o lado por onde a máscara abre (timeline e galeria) */
-html.an-revelacao .figura.revelar[data-revela='esquerda'] .lente { clip-path: inset(0 100% 0 0); }
-html.an-revelacao .figura.revelar[data-revela='direita'] .lente { clip-path: inset(0 0 0 100%); }
-html.an-revelacao .figura.revelar.visivel .lente {
-  clip-path: inset(0 0 0 0);
-  transition: clip-path 1.15s cubic-bezier(0.22, 1, 0.36, 1);
+@media (hover: hover) and (pointer: fine) {
+  html.an-revelacao .figura.revelar .lente { clip-path: inset(0 0 100% 0); }
+  /* data-revela alterna o lado por onde a máscara abre (timeline e galeria) */
+  html.an-revelacao .figura.revelar[data-revela='esquerda'] .lente { clip-path: inset(0 100% 0 0); }
+  html.an-revelacao .figura.revelar[data-revela='direita'] .lente { clip-path: inset(0 0 0 100%); }
+  html.an-revelacao .figura.revelar.visivel .lente {
+    clip-path: inset(0 0 0 0);
+    transition: clip-path 1.15s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+@media (hover: none), (pointer: coarse) {
+  html.an-revelacao .figura.revelar { opacity: 0; }
+  html.an-revelacao .figura.revelar.visivel {
+    opacity: 1;
+    transition: opacity 1.25s ease;
+  }
 }
 html.an-revelacao .figura.revelar:not(.visivel) img { --sr: 1.16; }
 html.an-revelacao .momento.revelar:not(.visivel) .momento__bolinha { transform: scale(0.45); opacity: 0; }
@@ -551,7 +564,8 @@ html.an-filete .filete { display: block; }
    an-barra. Este bloco é a segunda rede: se alguma classe sobrar, nada se move. */
 @media (prefers-reduced-motion: reduce) {
   .revelar,
-  html.an-revelacao .revelar { opacity: 1; transform: none; }
+  html.an-revelacao .revelar,
+  html.an-revelacao .figura.revelar { opacity: 1; transform: none; }
   html.an-revelacao .figura.revelar .lente,
   html.an-revelacao .figura.revelar[data-revela='esquerda'] .lente,
   html.an-revelacao .figura.revelar[data-revela='direita'] .lente { clip-path: none; }
