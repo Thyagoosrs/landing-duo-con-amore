@@ -12,12 +12,13 @@
 
 export const ANIMACOES = {
   // --- nas fotos ---
-  revelacao: true, // a foto aparece por máscara, de baixo para cima, e assenta de 1,09 para 1
-  zoomRolagem: true, // a foto cresce 3,5% enquanto atravessa a tela, no ritmo do dedo
-  veuQuente: true, // véu terracota sobre a foto que evapora em 1,5s quando ela entra
-  respiracaoHero: true, // a foto do topo cresce 7% em 24s, ida e volta, para sempre
+  revelacao: true, // a foto abre por máscara (timeline e galeria alternam o lado) e assenta de 1,16 para 1
+  florescerCor: true, // a foto entra meio sépia, sem viço, e acende para a cor plena em ~1,3s
+  zoomRolagem: true, // a foto cresce até 6% enquanto atravessa a tela, no ritmo do dedo
+  veuQuente: true, // véu terracota sobre a foto que evapora quando ela entra
+  respiracaoHero: true, // a foto do topo cresce 7% e deriva de leve em 24s, ida e volta, para sempre
   toqueFoto: true, // tocar (ou passar o mouse) aproxima 4,5%: entra em 0,6s, volta em 1,6s
-  parallaxGaleria: true, // as duas fotos da galeria deslizam em velocidades diferentes
+  parallaxFotos: true, // timeline, duo e galeria deslizam em velocidades diferentes da página
 
   // --- na página ---
   cascata: true, // selo, kicker, título, texto e botão entram com 70ms entre um e outro
@@ -32,11 +33,12 @@ export const ANIMACOES = {
 // chave -> classe no <html>. Toda regra de animação no estilos.css começa por uma destas.
 export const CLASSES = {
   revelacao: 'an-revelacao',
+  florescerCor: 'an-florescer',
   zoomRolagem: 'an-zoom',
   veuQuente: 'an-veu',
   respiracaoHero: 'an-respiracao',
   toqueFoto: 'an-toque',
-  parallaxGaleria: 'an-parallax',
+  parallaxFotos: 'an-parallax',
   cascata: 'an-cascata',
   tituloLinhas: 'an-titulo',
   fioTimeline: 'an-fio',

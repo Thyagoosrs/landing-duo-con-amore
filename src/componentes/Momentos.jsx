@@ -22,7 +22,7 @@ export default function Momentos() {
           <div className="timeline__fio" ref={fio} aria-hidden="true"></div>
           <div className="timeline__guia" ref={guia} aria-hidden="true"></div>
           <div className="timeline__lista">
-            {momentos.lista.map((m) => (
+            {momentos.lista.map((m, i) => (
               <article className="momento revelar" key={m.numeral}>
                 <div className="momento__marcador">
                   <div className="momento__bolinha" aria-hidden="true"></div>
@@ -33,7 +33,16 @@ export default function Momentos() {
                     <h3 className="momento__titulo">{m.titulo}</h3>
                     <p className="momento__texto">{m.texto}</p>
                   </div>
-                  <Figura className="momento__figura" src={m.foto} alt={m.alt} foco={m.foco} />
+                  {/* máscara alterna o lado e cada foto desliza numa velocidade */}
+                  <Figura
+                    className="momento__figura"
+                    src={m.foto}
+                    alt={m.alt}
+                    foco={m.foco}
+                    revelacao={i % 2 ? 'direita' : 'esquerda'}
+                    parallax={[0.025, 0.035, 0.03][i % 3]}
+                    folga
+                  />
                 </div>
               </article>
             ))}
