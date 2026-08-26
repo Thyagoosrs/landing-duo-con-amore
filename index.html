@@ -43,23 +43,18 @@
     </script>
 
     <!-- Google Analytics (GA4): mesmos eventos nomeados de medicao.js, também aqui.
-         Painel: analytics.google.com — propriedade "Duo Con Amore". -->
+         Painel: analytics.google.com — propriedade "Duo Con Amore".
+         Snippet padrão do Google, com a tag <script src> literal: o Search Console
+         verifica a propriedade lendo o HTML cru, sem executar JS. Carregar o gtag
+         por createElement (como faz o Clarity acima) esconde a tag do verificador. -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GMQLQ6Z560"></script>
     <script>
-      (function (w, d, s, id) {
-        // um Measurement ID real do GA4 começa com "G-"; o placeholder não bate
-        if (!/^G-[A-Z0-9]{6,}$/i.test(id)) return;
-        w.dataLayer = w.dataLayer || [];
-        w.gtag = function () {
-          w.dataLayer.push(arguments);
-        };
-        w.gtag('js', new Date());
-        w.gtag('config', id);
-        var t = d.createElement(s);
-        t.async = true;
-        t.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
-        var y = d.getElementsByTagName(s)[0];
-        y.parentNode.insertBefore(t, y);
-      })(window, document, 'script', 'G-GMQLQ6Z560');
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-GMQLQ6Z560');
     </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
