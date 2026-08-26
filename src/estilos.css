@@ -142,7 +142,7 @@ html.an-cabecalho .cabecalho__faixa.recolhido { transform: translateY(-102%); }
 
 /* --- hero --- */
 .hero { padding: clamp(8px, 2vw, 20px) 0 clamp(52px, 8vw, 104px); }
-.hero__quadro { position: relative; max-width: 780px; margin: 0 auto; }
+.hero__quadro { position: relative; max-width: 780px; margin: 0 auto; overflow: hidden; /* a respiração da foto acontece dentro da moldura */ }
 .hero__foto { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
 .hero__veu {
   position: absolute;
@@ -341,11 +341,14 @@ html.an-revelacao .revelar.visivel {
   transition: opacity 0.85s ease, transform 0.85s cubic-bezier(0.22, 0.7, 0.3, 1);
 }
 html.an-revelacao .figura.revelar { opacity: 1; transform: none; clip-path: inset(0 0 100% 0); }
+/* data-revela alterna o lado por onde a máscara abre (timeline e galeria) */
+html.an-revelacao .figura.revelar[data-revela='esquerda'] { clip-path: inset(0 100% 0 0); }
+html.an-revelacao .figura.revelar[data-revela='direita'] { clip-path: inset(0 0 0 100%); }
 html.an-revelacao .figura.revelar.visivel {
   clip-path: inset(0 0 0 0);
-  transition: clip-path 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: clip-path 1.15s cubic-bezier(0.22, 1, 0.36, 1);
 }
-html.an-revelacao .figura.revelar:not(.visivel) img { --sr: 1.09; }
+html.an-revelacao .figura.revelar:not(.visivel) img { --sr: 1.16; }
 html.an-revelacao .momento.revelar:not(.visivel) .momento__bolinha { transform: scale(0.45); opacity: 0; }
 html.an-revelacao .momento.revelar.visivel .momento__bolinha {
   transform: none;
@@ -359,6 +362,14 @@ html.an-revelacao.an-cascata .revelar.visivel { transition-delay: var(--d, 0s); 
 /* véu quente: cobre a foto até ela entrar e evapora junto com a revelação */
 html.an-veu .figura.revelar:not(.visivel) .figura__veu { opacity: 1; }
 
+/* floração de cor: a foto entra meio sépia, sem viço, e acende para a cor plena */
+html.an-florescer .figura img {
+  transition: transform 1.6s cubic-bezier(0.2, 0.7, 0.3, 1), filter 1.3s ease 0.12s;
+}
+html.an-florescer .figura.revelar:not(.visivel) img {
+  filter: sepia(0.45) saturate(0.55) brightness(1.03);
+}
+
 /* título linha por linha: a máscara vale só no título; o fade geral não o segura */
 html.an-titulo .hero__titulo.revelar { opacity: 1; transform: none; }
 html.an-titulo .hero__linha { overflow: hidden; }
@@ -368,10 +379,11 @@ html.an-titulo .hero__titulo.visivel .hero__linha-interna {
   transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1) var(--ld, 0s);
 }
 
-/* respiração no hero: único movimento contínuo da página */
+/* respiração no hero: único movimento contínuo da página — cresce e deriva
+   de leve, sempre dentro da moldura (o .hero__quadro corta o excedente) */
 @keyframes respirar {
-  from { transform: scale(1); }
-  to { transform: scale(1.075); }
+  from { transform: scale(1) translate(0, 0); }
+  to { transform: scale(1.075) translate(-1.2%, -0.8%); }
 }
 html.an-respiracao .hero__foto { animation: respirar 24s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate; }
 
@@ -535,8 +547,11 @@ html.an-filete .filete { display: block; }
 @media (prefers-reduced-motion: reduce) {
   .revelar,
   html.an-revelacao .revelar { opacity: 1; transform: none; }
-  html.an-revelacao .figura.revelar { clip-path: none; }
+  html.an-revelacao .figura.revelar,
+  html.an-revelacao .figura.revelar[data-revela='esquerda'],
+  html.an-revelacao .figura.revelar[data-revela='direita'] { clip-path: none; }
   html.an-revelacao .figura.revelar:not(.visivel) img { --sr: 1; }
+  html.an-florescer .figura.revelar:not(.visivel) img { filter: none; }
   html.an-revelacao .momento.revelar:not(.visivel) .momento__bolinha { transform: none; opacity: 1; }
   html.an-titulo .hero__titulo:not(.visivel) .hero__linha-interna { transform: none; }
   html.an-veu .figura.revelar:not(.visivel) .figura__veu { opacity: 0; }

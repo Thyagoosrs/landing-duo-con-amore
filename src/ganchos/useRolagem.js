@@ -52,7 +52,7 @@ export function useRolagem() {
         const r = lente.getBoundingClientRect();
         const rel = (r.top + r.height / 2) / vh;
         const q = Math.min(1, Math.max(0, 1 - rel));
-        lente.style.setProperty('--z', (base * (1 + 0.035 * q)).toFixed(4));
+        lente.style.setProperty('--z', (base * (1 + 0.06 * q)).toFixed(4));
       });
 
       paralaxes.forEach((img) => {

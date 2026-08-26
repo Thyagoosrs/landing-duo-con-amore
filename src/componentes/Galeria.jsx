@@ -16,6 +16,7 @@ export default function Galeria() {
             className="galeria__figura"
             src={g.foto}
             alt={g.alt}
+            revelacao={i % 2 ? 'direita' : 'esquerda'}
             parallax={FATORES[i % FATORES.length]}
             folga
           />
