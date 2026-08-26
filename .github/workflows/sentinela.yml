@@ -1,0 +1,36 @@
+name: Sentinela de publicação
+
+# O deploy.yml já dispara sozinho a cada push na main — isso funciona na
+# grande maioria das vezes (ver o histórico de runs). Este workflow existe
+# só para o caso raro em que o GitHub não entrega o evento de push para o
+# Actions (webhook perdido, instabilidade da plataforma): de tempos em
+# tempos, confere se o último commit da main já foi publicado com sucesso
+# e, se não foi, redispara o deploy sozinho — sem precisar de ninguém
+# entrando no repositório para clicar em "Run workflow".
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Redispara o deploy se a main ainda não foi publicada
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          HEAD=$(gh api "repos/${{ github.repository }}/commits/main" --jq .sha)
+          PUBLICADO=$(gh run list --repo "${{ github.repository }}" --workflow=deploy.yml --status=success --limit=1 --json headSha --jq '.[0].headSha // ""')
+          echo "commit da main:      $HEAD"
+          echo "último publicado:    ${PUBLICADO:-(nenhum)}"
+          if [ "$HEAD" != "$PUBLICADO" ]; then
+            echo "main ainda não publicada — disparando o deploy"
+            gh workflow run deploy.yml --repo "${{ github.repository }}"
+          else
+            echo "main já publicada, nada a fazer"
+          fi
