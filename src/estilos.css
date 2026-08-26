@@ -34,6 +34,18 @@ body {
 img { display: block; max-width: 100%; }
 a { color: var(--terracota); text-decoration: none; }
 a:hover { color: var(--marrom); }
+/* sem isso, todo <button> nasce com a caixa nativa do navegador (fundo, borda,
+   padding) — foi o que deixou o kebab com aparência de botão sem estilo. */
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
 :focus-visible { outline: 2px solid var(--terracota); outline-offset: 3px; }
 
 /* --- tipografia utilitária --- */
@@ -107,11 +119,13 @@ html.an-cabecalho .cabecalho__faixa.recolhido { transform: translateY(-102%); }
   margin: 0 auto;
   padding: clamp(18px, 4vw, 26px) var(--pad-x);
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 16px 28px;
+  gap: 12px;
 }
+/* sem min-width:0 de propósito: junto com o white-space:nowrap do marca__nome,
+   o flexbox protege a largura cheia do nome — sem isso ele pode encolher
+   abaixo do texto e o kebab tampa o final do nome (aconteceu, foi corrigido). */
 .marca { display: flex; align-items: center; gap: 14px; }
 .marca__selo {
   width: 38px;
@@ -127,18 +141,70 @@ html.an-cabecalho .cabecalho__faixa.recolhido { transform: translateY(-102%); }
   color: var(--texto);
 }
 .marca__linhas { display: flex; flex-direction: column; gap: 3px; }
+/* nowrap protege o nome de quebrar em duas linhas quando o kebab e o botão
+   dividem a linha com a marca — sem isso, "Duo Con Amore" espreme e quebra. */
 .marca__nome {
   font: 500 10px/1 var(--sans);
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--terracota);
+  white-space: nowrap;
 }
-.marca__dupla { font: italic 400 13px/1 var(--serif); color: var(--texto); }
-.nav { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
-.nav a { font: 400 12.5px/1 var(--sans); color: var(--texto); white-space: nowrap; }
-.nav a:hover { color: var(--marrom); }
-.nav .btn-pill { color: var(--terracota); }
-.nav .btn-pill:hover { color: var(--areia); }
+.marca__dupla { font: italic 400 13px/1 var(--serif); color: var(--texto); white-space: nowrap; }
+
+/* nav de largura sobrando (desktop): existe só a partir de 768px.
+   Abaixo disso os mesmos links moram em .cabecalho__painel, atrás do kebab. */
+.cabecalho__nav-largo { display: none; }
+
+/* --- cabeçalho: kebab + botão, sempre numa linha só com a marca --- */
+.cabecalho__direita { display: flex; align-items: center; gap: 6px; flex: none; }
+.kebab {
+  width: 32px;
+  height: 32px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  color: var(--texto);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.kebab svg { width: 18px; height: 18px; }
+.kebab:hover { background: rgba(59, 42, 28, 0.06); }
+.kebab[aria-expanded='true'] { color: var(--marrom); background: rgba(59, 42, 28, 0.08); }
+
+/* painel do menu: altura medida via JS (Cabecalho.jsx), nunca por grid-template-rows
+   — essa técnica não resolve em contêiner de altura automática. */
+.cabecalho__painel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.32s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.32s ease;
+  border-top: 1px solid transparent;
+}
+.cabecalho__painel.aberto { border-top-color: var(--linha); }
+.cabecalho__painel nav {
+  display: flex;
+  flex-direction: column;
+  max-width: var(--pagina);
+  margin: 0 auto;
+  padding: 4px var(--pad-x) 10px;
+}
+.cabecalho__painel nav a {
+  font: 400 13px/1 var(--sans);
+  color: var(--texto);
+  padding: 12px 2px;
+  border-bottom: 1px solid rgba(59, 42, 28, 0.08);
+}
+.cabecalho__painel nav a:last-child { border-bottom: 0; }
+.cabecalho__painel nav a:hover { color: var(--marrom); }
+
+/* a partir daqui sobra espaço: links sempre visíveis, kebab e painel saem de cena */
+@media (min-width: 768px) {
+  .cabecalho__nav-largo { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
+  .cabecalho__nav-largo a { font: 400 12.5px/1 var(--sans); color: var(--texto); white-space: nowrap; }
+  .cabecalho__nav-largo a:hover { color: var(--marrom); }
+  .kebab { display: none; }
+  .cabecalho__painel { display: none; }
+}
 
 /* --- hero --- */
 .hero { padding: clamp(8px, 2vw, 20px) 0 clamp(52px, 8vw, 104px); }
