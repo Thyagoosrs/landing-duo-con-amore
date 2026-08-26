@@ -33,7 +33,12 @@ export default function Momentos() {
                     <p className="momento__texto">{m.texto}</p>
                   </div>
                   <div className="momento__figura">
-                    <img src={m.foto} alt={m.alt} loading="lazy" />
+                    <img
+                      src={m.foto}
+                      alt={m.alt}
+                      loading="lazy"
+                      style={m.foco ? { objectPosition: m.foco } : undefined}
+                    />
                   </div>
                 </div>
               </article>
