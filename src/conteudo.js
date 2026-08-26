@@ -23,8 +23,8 @@ export const hero = {
   titulo: 'A trilha sonora do dia mais importante da vida de vocês.',
   texto:
     'Do primeiro acorde da cerimônia à última música da festa — voz e violão a dois, com a delicadeza de quem também vive um grande amor.',
-  foto: midia('hero.png'),
-  alt: 'Thyago e Júlia cantando em um casamento',
+  foto: midia('hero.jpg'),
+  alt: 'Thyago e Júlia abraçados e sorrindo, com luzes quentes de festa ao fundo',
 };
 
 export const momentos = {
@@ -38,8 +38,8 @@ export const momentos = {
       titulo: 'Cerimônia',
       texto:
         'A entrada, as alianças, a saída. Repertório sacro e clássico, ensaiado com o ritmo do seu roteiro.',
-      foto: midia('momento-cerimonia.png'),
-      alt: 'O duo tocando durante a cerimônia',
+      foto: midia('momento-cerimonia.jpg'),
+      alt: 'Júlia ao microfone e Thyago ao violão diante do altar da igreja',
     },
     {
       numeral: 'II',
@@ -68,8 +68,8 @@ export const duo = {
     'Somos um casal que canta casamentos. Voz e violão, sem playback e sem excesso — o que acontece no altar é sempre ao vivo.',
     'Antes do grande dia, conversamos sobre a história de vocês e montamos o repertório junto: as músicas que já são suas e as que vão passar a ser.',
   ],
-  foto: midia('duo.png'),
-  alt: 'Thyago e Júlia tocando juntos',
+  foto: midia('duo.jpg'),
+  alt: 'Thyago e Júlia lado a lado, elegantes, no salão de um casamento',
 };
 
 export const citacao = 'Não cantamos músicas. Cantamos o amor.';
@@ -77,9 +77,8 @@ export const citacao = 'Não cantamos músicas. Cantamos o amor.';
 export const galeria = {
   kicker: 'Galeria',
   fotos: [
-    { foto: midia('galeria-1.png'), alt: 'Foto na cerimônia' },
-    { foto: midia('galeria-2.png'), alt: 'Foto na festa' },
-    { foto: midia('galeria-3.png'), alt: 'Foto na igreja' },
+    { foto: midia('galeria-1.jpg'), alt: 'Júlia cantando no coro da igreja, com vitrais coloridos ao fundo' },
+    { foto: midia('galeria-2.jpg'), alt: 'Thyago e Júlia juntos no salão da igreja antes da cerimônia' },
   ],
 };
 
