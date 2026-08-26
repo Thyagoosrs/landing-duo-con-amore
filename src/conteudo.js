@@ -10,6 +10,8 @@ export const marca = {
   dupla: 'Thyago & Júlia',
   cidade: 'São Paulo, SP',
   instagram: 'duoconamore',
+  // placeholder assumido: o quadradinho escrito "Logo" avisa que a marca ainda não tem símbolo.
+  selo: 'Logo',
 };
 
 export const navegacao = [
@@ -19,8 +21,9 @@ export const navegacao = [
 ];
 
 export const hero = {
-  kicker: 'Voz & violão para casamentos',
-  titulo: 'A trilha sonora do dia mais importante da vida de vocês.',
+  kicker: 'Voz e violão ao vivo · São Paulo e região',
+  // linhas: cada item é uma linha do título — a animação sobe uma de cada vez.
+  linhas: ['Um casal que canta', 'para casais.'],
   texto:
     'Do primeiro acorde da cerimônia à última música da festa — voz e violão a dois, com a delicadeza de quem também vive um grande amor.',
   foto: midia('hero.jpg'),
@@ -70,6 +73,7 @@ export const duo = {
   paragrafos: [
     'Somos um casal que canta casamentos. Voz e violão, sem playback e sem excesso — o que acontece no altar é sempre ao vivo.',
     'Antes do grande dia, conversamos sobre a história de vocês e montamos o repertório junto: as músicas que já são suas e as que vão passar a ser.',
+    'Levamos o nosso som. Chegamos antes, alinhamos o roteiro com a cerimonialista e ensaiamos a entrada no local.',
   ],
   foto: midia('duo.jpg'),
   alt: 'Thyago e Júlia lado a lado, elegantes, no salão de um casamento',
@@ -83,6 +87,11 @@ export const galeria = {
     { foto: midia('galeria-1.jpg'), alt: 'Júlia cantando no coro da igreja, com vitrais coloridos ao fundo' },
     { foto: midia('galeria-2.jpg'), alt: 'Thyago e Júlia juntos no salão da igreja antes da cerimônia' },
   ],
+};
+
+export const rodape = {
+  // rótulo acessível do ícone de voltar ao início (não aparece na tela, o leitor de tela lê)
+  voltarTopo: 'Voltar ao início da página',
 };
 
 export const contato = {

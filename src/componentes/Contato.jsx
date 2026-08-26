@@ -5,7 +5,7 @@ export default function Contato() {
   return (
     <section className="contato" id="contato">
       <div className="contato__risco" aria-hidden="true"></div>
-      <div className="contato__grade">
+      <div className="contato__grade revelar">
         <div>
           <h2 className="titulo contato__titulo">{contato.titulo}</h2>
           <p className="corpo">{contato.texto}</p>

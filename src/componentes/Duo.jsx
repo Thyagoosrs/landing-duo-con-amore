@@ -1,12 +1,11 @@
 import { duo } from '../conteudo.js';
 import BotaoWhatsapp from './BotaoWhatsapp.jsx';
+import Figura from './Figura.jsx';
 
 export default function Duo() {
   return (
     <section className="duo" id="duo">
-      <div className="revelar">
-        <img className="duo__foto" src={duo.foto} alt={duo.alt} loading="lazy" />
-      </div>
+      <Figura className="duo__foto" src={duo.foto} alt={duo.alt} />
       <div className="revelar">
         <div className="kicker">{duo.kicker}</div>
         <h2 className="titulo duo__titulo">{duo.titulo}</h2>

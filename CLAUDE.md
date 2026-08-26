@@ -21,7 +21,8 @@ npm run build    # dist/
 | Cores, tipografia, layout | `src/estilos.css` |
 | Ordem das seções | `src/App.jsx` |
 | Estrutura de uma seção | `src/componentes/<Nome>.jsx` |
-| Animações | `src/ganchos/` |
+| **Ligar/desligar cada animação** | `src/animacoes.js` — true/false por animação, nada mais |
+| Mecânica das animações | `src/ganchos/` e o bloco "Animações" de `estilos.css` |
 | Arquivos de imagem | `public/assets/` |
 
 ## Regras
@@ -41,6 +42,8 @@ Português do Brasil, sofisticado e direto, sem emoji e sem exclamação. Fala c
 Botão promete a resposta, não o esforço: "Ver se a data está livre", não "Enviar mensagem".
 
 ## Pendências conhecidas
+- O selo da marca mostra o texto "Logo" de propósito (placeholder assumido, `marca.selo` em `conteudo.js`) — trocar quando a marca tiver símbolo.
+- `duoconamore.com.br` registrado mas sem DNS: criar os registros A do GitHub Pages no Registro.br e um `public/CNAME` com o domínio.
 - Todas as fotos em `public/assets/` são placeholders — trocar por fotos reais (inclusive `og.png`, 1200×630).
 - `index.html`: `canonical`, `og:url` e `og:image` ainda apontam para `duoconamore.com` (ajustar ao domínio final).
 - Seções previstas e ainda não construídas: vídeo com som real (contexto `provaSonora`), depoimentos (`provaSocial`), faixa de preço, bloco de estrutura (equipamento, horário, plano B).
