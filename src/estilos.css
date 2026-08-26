@@ -92,6 +92,16 @@ a:hover { color: var(--marrom); }
 }
 
 /* --- cabeçalho --- */
+/* a faixa embrulha o cabeçalho por causa do retrátil (an-cabecalho, ver animacoes.js) */
+.cabecalho__faixa { background: var(--areia); }
+html.an-cabecalho .cabecalho__faixa {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 1px 0 var(--linha);
+}
+html.an-cabecalho .cabecalho__faixa.recolhido { transform: translateY(-102%); }
 .cabecalho {
   max-width: var(--pagina);
   margin: 0 auto;
@@ -109,6 +119,12 @@ a:hover { color: var(--marrom); }
   border: 1px solid rgba(59, 42, 28, 0.25);
   border-radius: 2px;
   flex: none;
+  display: grid;
+  place-items: center;
+  font: 500 8px/1 var(--sans);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--texto);
 }
 .marca__linhas { display: flex; flex-direction: column; gap: 3px; }
 .marca__nome {
@@ -154,6 +170,9 @@ a:hover { color: var(--marrom); }
   margin: 0;
   max-width: 22ch;
 }
+/* cada linha do título é um bloco; a máscara só existe com an-titulo ligado */
+.hero__linha { display: block; }
+.hero__linha-interna { display: block; }
 .hero__abaixo {
   max-width: var(--pagina);
   margin: 0 auto;
@@ -197,6 +216,9 @@ a:hover { color: var(--marrom); }
 .timeline__fio {
   background: var(--terracota);
   transform-origin: top center;
+  transform: scaleY(1); /* desligado ou sem JS: linha completa, estática */
+}
+html.an-fio .timeline__fio {
   transform: scaleY(var(--fio, 0));
   transition: transform 0.25s linear;
 }
@@ -236,8 +258,6 @@ a:hover { color: var(--marrom); }
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: scale(0.5);
-  transition: transform 0.6s cubic-bezier(0.2, 1.2, 0.3, 1);
 }
 .momento__bolinha::after {
   content: '';
@@ -269,14 +289,7 @@ a:hover { color: var(--marrom); }
   margin: 0;
   max-width: 38ch;
 }
-.momento__figura { overflow: hidden; border-radius: 3px; }
-.momento__figura img {
-  width: 100%;
-  aspect-ratio: 5 / 4;
-  object-fit: cover;
-  transform: scale(1.07);
-  transition: transform 1.6s cubic-bezier(0.2, 0.7, 0.3, 1);
-}
+.momento__figura img { aspect-ratio: 5 / 4; }
 .momentos__nota {
   display: flex;
   flex-wrap: wrap;
@@ -292,15 +305,90 @@ a:hover { color: var(--marrom); }
   max-width: 38ch;
 }
 
-/* --- animação de entrada --- */
-.revelar { opacity: 0; transform: translateY(24px); will-change: opacity, transform; }
-.revelar.visivel {
+/* =========================================================
+   Figura — três camadas por foto, para as animações não
+   brigarem pelo mesmo transform (ver componentes/Figura.jsx):
+   .figura = máscara · .lente = rolagem · img = entrada e toque
+   ========================================================= */
+.figura { overflow: hidden; border-radius: 3px; position: relative; }
+.lente { display: block; transform: scale(var(--z, 1)) translateY(var(--py, 0px)); }
+.figura img {
+  width: 100%;
+  object-fit: cover;
+  transform: scale(var(--sr, 1));
+  transition: transform 1.6s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+.figura__veu {
+  position: absolute;
+  inset: 0;
+  background: rgba(140, 90, 52, 0.34);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.5s ease;
+}
+
+/* =========================================================
+   Animações — cada bloco só age com a classe correspondente
+   no <html>, ligada em animacoes.js via useAnimacoes.
+   Sem classe (ou sem JS), tudo abaixo é o estado final: visível.
+   ========================================================= */
+
+/* revelação de entrada: texto sobe e desvanece; foto abre por máscara e assenta */
+html.an-revelacao .revelar { opacity: 0; transform: translateY(24px); will-change: opacity, transform; }
+html.an-revelacao .revelar.visivel {
   opacity: 1;
   transform: none;
   transition: opacity 0.85s ease, transform 0.85s cubic-bezier(0.22, 0.7, 0.3, 1);
 }
-.revelar.visivel .momento__bolinha,
-.revelar.visivel .momento__figura img { transform: none; }
+html.an-revelacao .figura.revelar { opacity: 1; transform: none; clip-path: inset(0 0 100% 0); }
+html.an-revelacao .figura.revelar.visivel {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+html.an-revelacao .figura.revelar:not(.visivel) img { --sr: 1.09; }
+html.an-revelacao .momento.revelar:not(.visivel) .momento__bolinha { transform: scale(0.45); opacity: 0; }
+html.an-revelacao .momento.revelar.visivel .momento__bolinha {
+  transform: none;
+  opacity: 1;
+  transition: transform 0.6s cubic-bezier(0.2, 1.2, 0.3, 1), opacity 0.45s ease;
+}
+
+/* cascata: escalona a revelação pelo data-cascata (--d vem do useRevelar) */
+html.an-revelacao.an-cascata .revelar.visivel { transition-delay: var(--d, 0s); }
+
+/* véu quente: cobre a foto até ela entrar e evapora junto com a revelação */
+html.an-veu .figura.revelar:not(.visivel) .figura__veu { opacity: 1; }
+
+/* título linha por linha: a máscara vale só no título; o fade geral não o segura */
+html.an-titulo .hero__titulo.revelar { opacity: 1; transform: none; }
+html.an-titulo .hero__linha { overflow: hidden; }
+html.an-titulo .hero__titulo:not(.visivel) .hero__linha-interna { transform: translateY(105%); }
+html.an-titulo .hero__titulo.visivel .hero__linha-interna {
+  transform: none;
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1) var(--ld, 0s);
+}
+
+/* respiração no hero: único movimento contínuo da página */
+@keyframes respirar {
+  from { transform: scale(1); }
+  to { transform: scale(1.075); }
+}
+html.an-respiracao .hero__foto { animation: respirar 24s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate; }
+
+/* toque na foto: entra em 0,6s, volta pela transição lenta de 1,6s */
+html.an-toque .figura:hover img,
+html.an-toque .figura:active img {
+  --sr: 1.045;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* rolagem suave (an-suave): âncoras do menu e o voltar-ao-início deslizam.
+   Sem a classe (JS falhou ou movimento reduzido), a âncora salta — e funciona igual. */
+html.an-suave { scroll-behavior: smooth; }
+/* com o cabeçalho retrátil, a âncora para um pouco antes da seção, para o
+   cabeçalho não cobrir o título quando reaparece na subida. A altura real
+   (--altura-cabecalho) é medida pelo useRolagem — no celular ele tem duas linhas. */
+html.an-cabecalho section[id] { scroll-margin-top: var(--altura-cabecalho, 90px); }
 
 /* --- o duo --- */
 .duo {
@@ -312,7 +400,8 @@ a:hover { color: var(--marrom); }
   gap: clamp(28px, 5vw, 72px);
   align-items: center;
 }
-.duo__foto { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.duo__foto { width: 100%; }
+.duo__foto img { aspect-ratio: 4 / 5; }
 .duo .kicker { margin-bottom: 20px; }
 .duo__titulo { margin-bottom: 20px; }
 .duo__link { display: inline-block; margin-top: 22px; }
@@ -339,7 +428,10 @@ a:hover { color: var(--marrom); }
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 16px;
 }
-.galeria__grade img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.galeria__grade img { aspect-ratio: 4 / 5; }
+/* a lente com folga entra 8% ampliada (via --z, no useRolagem) para o
+   parallax deslizar a foto sem nunca mostrar a borda */
+.galeria__figura .lente { will-change: transform; }
 
 /* --- contato + rodapé --- */
 .contato {
@@ -382,9 +474,78 @@ a:hover { color: var(--marrom); }
 .rodape__link { color: var(--texto); border-bottom-color: rgba(59, 42, 28, 0.2); }
 .rodape__link:hover { color: var(--marrom); }
 
+/* --- voltar ao início --- */
+.rodape__topo {
+  flex-basis: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.voltar-topo {
+  width: 44px; /* alvo de toque mínimo no celular */
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--terracota);
+  color: var(--terracota);
+  display: grid;
+  place-items: center;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+.voltar-topo:hover { background: var(--terracota); color: var(--areia); }
+.voltar-topo svg { transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+.voltar-topo:hover svg { transform: translateY(-2px); }
+
+/* --- barra fixa de WhatsApp (an-barra) --- */
+.barra-fixa {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 60;
+  display: none;
+  padding: 10px clamp(14px, 4vw, 20px) calc(10px + env(safe-area-inset-bottom, 0px));
+  background: rgba(232, 223, 208, 0.94);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid var(--linha);
+}
+html.an-barra .barra-fixa {
+  display: flex;
+  transform: translateY(130%);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+html.an-barra .barra-fixa.visivel { transform: none; }
+.barra-fixa__botao { flex: 1; max-width: 420px; margin: 0 auto; }
+
+/* --- filete de progresso (an-filete) --- */
+.filete {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 70;
+  display: none;
+  pointer-events: none;
+}
+html.an-filete .filete { display: block; }
+.filete__barra { display: block; height: 100%; width: 0; background: var(--terracota); }
+
+/* Com movimento reduzido, useAnimacoes já não acende classe nenhuma além de
+   an-barra. Este bloco é a segunda rede: se alguma classe sobrar, nada se move. */
 @media (prefers-reduced-motion: reduce) {
-  .revelar { opacity: 1; transform: none; }
-  .momento__bolinha,
-  .momento__figura img { transform: none; }
-  .timeline__fio { transform: scaleY(1); }
+  .revelar,
+  html.an-revelacao .revelar { opacity: 1; transform: none; }
+  html.an-revelacao .figura.revelar { clip-path: none; }
+  html.an-revelacao .figura.revelar:not(.visivel) img { --sr: 1; }
+  html.an-revelacao .momento.revelar:not(.visivel) .momento__bolinha { transform: none; opacity: 1; }
+  html.an-titulo .hero__titulo:not(.visivel) .hero__linha-interna { transform: none; }
+  html.an-veu .figura.revelar:not(.visivel) .figura__veu { opacity: 0; }
+  html.an-respiracao .hero__foto { animation: none; }
+  .figura img { transition: none; }
+  .lente { transform: none; }
+  html.an-fio .timeline__fio { transform: scaleY(1); transition: none; }
+  html.an-barra .barra-fixa,
+  html.an-cabecalho .cabecalho__faixa { transition: none; }
+  html.an-suave { scroll-behavior: auto; }
+  .voltar-topo svg { transition: none; }
 }

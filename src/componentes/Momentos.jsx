@@ -1,6 +1,7 @@
 import { momentos } from '../conteudo.js';
 import { useFioTimeline } from '../ganchos/useFioTimeline.js';
 import BotaoWhatsapp from './BotaoWhatsapp.jsx';
+import Figura from './Figura.jsx';
 
 export default function Momentos() {
   const { caixa, fio, guia } = useFioTimeline();
@@ -8,7 +9,7 @@ export default function Momentos() {
   return (
     <section className="momentos" id="momentos">
       <div className="momentos__interno">
-        <div className="momentos__topo">
+        <div className="momentos__topo revelar">
           <div>
             <div className="kicker">{momentos.kicker}</div>
             <h2 className="momentos__titulo">{momentos.titulo}</h2>
@@ -32,21 +33,14 @@ export default function Momentos() {
                     <h3 className="momento__titulo">{m.titulo}</h3>
                     <p className="momento__texto">{m.texto}</p>
                   </div>
-                  <div className="momento__figura">
-                    <img
-                      src={m.foto}
-                      alt={m.alt}
-                      loading="lazy"
-                      style={m.foco ? { objectPosition: m.foco } : undefined}
-                    />
-                  </div>
+                  <Figura className="momento__figura" src={m.foto} alt={m.alt} foco={m.foco} />
                 </div>
               </article>
             ))}
           </div>
         </div>
 
-        <div className="momentos__nota">
+        <div className="momentos__nota revelar">
           <p>{momentos.nota}</p>
           <BotaoWhatsapp contexto="repertorio" variante="link-forte" />
         </div>
