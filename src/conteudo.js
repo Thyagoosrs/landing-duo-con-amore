@@ -40,22 +40,25 @@ export const momentos = {
         'A entrada, as alianças, a saída. Repertório sacro e clássico, ensaiado com o ritmo do seu roteiro.',
       foto: midia('momento-cerimonia.jpg'),
       alt: 'Júlia ao microfone e Thyago ao violão diante do altar da igreja',
+      // foco (opcional): qual parte da foto aparece na moldura 5:4 da timeline.
+      // 'center 100%' ancora embaixo (mostra mais corpo); 'center 0%' ancora em cima.
+      foco: 'center 88%',
     },
     {
       numeral: 'II',
       titulo: 'Coquetel',
       texto:
         'O brinde, o abraço, o reencontro. MPB e clássicos nacionais na medida certa da conversa.',
-      foto: midia('momento-coquetel.png'),
-      alt: 'O duo tocando no coquetel',
+      foto: midia('momento-coquetel.jpg'),
+      alt: 'Convidados brindando com taças de espumante no coquetel',
     },
     {
       numeral: 'III',
       titulo: 'Festa',
       texto:
         'A primeira dança, só de vocês — e o pop que levanta o salão até a última música.',
-      foto: midia('momento-festa.png'),
-      alt: 'O duo tocando na festa',
+      foto: midia('momento-festa.jpg'),
+      alt: 'Convidados dançando na pista sob globos espelhados',
     },
   ],
   nota: 'O repertório a gente monta com vocês — música fora da lista é normal, é o que mais acontece.',
