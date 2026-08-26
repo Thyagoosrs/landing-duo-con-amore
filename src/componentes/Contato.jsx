@@ -1,5 +1,6 @@
 import { contato, marca } from '../conteudo.js';
 import BotaoWhatsapp from './BotaoWhatsapp.jsx';
+import { medir } from '../medicao.js';
 
 export default function Contato() {
   return (
@@ -17,6 +18,7 @@ export default function Contato() {
             href={'https://instagram.com/' + marca.instagram}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => medir('instagram')}
           >
             <svg
               width="17"
