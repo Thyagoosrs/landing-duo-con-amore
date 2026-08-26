@@ -1,4 +1,5 @@
 import { linkWhatsapp, ROTULOS } from '../whatsapp.js';
+import { medir } from '../medicao.js';
 
 // contexto: chave de whatsapp.js (hero, repertorio, bastidor, rodape, semData…)
 // variante: 'solido' | 'pill' | 'link' | 'link-forte'
@@ -10,16 +11,13 @@ const CLASSES = {
 };
 
 // Todo clique de WhatsApp passa por aqui, então a medição mora aqui:
-// um evento por contexto (whatsapp_hero, whatsapp_repertorio…) diz não só
-// QUANTOS clicaram, mas QUAL argumento da página abriu a conversa.
-// Sem Clarity carregado (ID não colado, bloqueador, JS falhou), não faz nada.
-function medirClique(contexto) {
-  if (typeof window.clarity === 'function') {
-    window.clarity('event', 'whatsapp_' + contexto);
-  }
-}
-
-export default function BotaoWhatsapp({ contexto, variante = 'solido', className = '', children }) {
+// um evento por posição na página (whatsapp_hero, whatsapp_barra…) diz não
+// só QUANTOS clicaram, mas QUAL botão abriu a conversa.
+//
+// origem: nome do evento quando vários botões reusam o mesmo contexto de
+// mensagem — cabeçalho, hero e barra fixa mandam a mesma mensagem ('hero'),
+// mas cada um mede como um evento próprio. Sem origem, mede pelo contexto.
+export default function BotaoWhatsapp({ contexto, origem, variante = 'solido', className = '', children }) {
   const classe = [CLASSES[variante] || CLASSES.solido, className].filter(Boolean).join(' ');
   return (
     <a
@@ -27,7 +25,7 @@ export default function BotaoWhatsapp({ contexto, variante = 'solido', className
       href={linkWhatsapp(contexto)}
       target="_blank"
       rel="noopener noreferrer"
-      onClick={() => medirClique(contexto)}
+      onClick={() => medir('whatsapp_' + (origem || contexto))}
     >
       {children || ROTULOS[contexto]}
     </a>

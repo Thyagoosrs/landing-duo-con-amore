@@ -1,5 +1,6 @@
 import { marca, navegacao } from '../conteudo.js';
 import BotaoWhatsapp from './BotaoWhatsapp.jsx';
+import { medir } from '../medicao.js';
 
 // A .cabecalho__faixa existe por causa do cabeçalho retrátil (an-cabecalho):
 // é ela que gruda no topo e recolhe ao descer — ver useRolagem.
@@ -16,11 +17,11 @@ export default function Cabecalho() {
         </div>
         <nav className="nav revelar" data-cascata="1">
           {navegacao.map((item) => (
-            <a key={item.ancora} href={item.ancora}>
+            <a key={item.ancora} href={item.ancora} onClick={() => medir('menu_' + item.ancora.slice(1))}>
               {item.rotulo}
             </a>
           ))}
-          <BotaoWhatsapp contexto="hero" variante="pill" />
+          <BotaoWhatsapp contexto="hero" origem="cabecalho" variante="pill" />
         </nav>
       </div>
     </header>
