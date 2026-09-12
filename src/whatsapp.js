@@ -2,7 +2,7 @@
 // Para mudar número ou texto, mexa SÓ aqui. Os componentes pedem por chave
 // (ex.: <BotaoWhatsapp contexto="hero" />), nunca por URL escrita à mão.
 
-export const WHATSAPP = '5511915997777'; // 55 + DDD + número
+export const WHATSAPP = '5511950672898'; // 55 + DDD + número
 
 // Regras de escrita (não quebrar):
 // 1. Um campo por mensagem, e ele é a ÚLTIMA coisa do texto — o cursor do

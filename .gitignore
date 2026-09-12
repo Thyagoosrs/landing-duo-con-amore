@@ -20,3 +20,5 @@ dist
 .claude/worktrees/
 # cache do detector, regenerado a cada edição
 .impeccable/hook.cache.json
+# contexto de produto que a skill lê; a landing não depende dele para rodar
+PRODUCT.md
