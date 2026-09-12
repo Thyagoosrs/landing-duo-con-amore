@@ -18,7 +18,8 @@ dist
 # skill presente ele simplesmente não roda.
 .claude/skills/
 .claude/worktrees/
-# cache do detector, regenerado a cada edição
-.impeccable/hook.cache.json
-# contexto de produto que a skill lê; a landing não depende dele para rodar
+# Artefatos da skill: anotação de ferramenta de design, não peça do site. A
+# landing sobe e funciona sem nenhum deles; continuam no disco para a skill ler.
+.impeccable/
 PRODUCT.md
+DESIGN.md
