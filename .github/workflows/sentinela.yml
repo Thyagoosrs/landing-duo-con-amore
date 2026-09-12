@@ -7,9 +7,18 @@ name: Sentinela de publicação
 # tempos, confere se o último commit da main já foi publicado com sucesso
 # e, se não foi, redispara o deploy sozinho — sem precisar de ninguém
 # entrando no repositório para clicar em "Run workflow".
+#
+# Roda 1x por dia, de madrugada (09:17 UTC = 06:17 em Brasília): um deploy
+# perdido durante o dia é corrigido antes da manhã seguinte. Já foi de 15 em
+# 15 minutos, o que só enchia a aba Actions de runs iguais — o GitHub, de
+# todo jeito, estrangula agendamento em repositório de pouco movimento e não
+# cumpre o horário do cron (na prática saía de 3 em 3 horas). Os minutos
+# quebrados (:17) evitam o pico de agendamentos na hora cheia.
+#
+# Se algum dia precisar rodar na hora, é pela aba Actions -> Run workflow.
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '17 9 * * *'
   workflow_dispatch:
 
 permissions:
